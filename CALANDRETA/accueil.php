@@ -4,20 +4,20 @@ session_start();
 //On vérifie qu'elle soit bien définie
 if(empty($_SESSION['user']) || empty($_SESSION['password']))
 {
-    header('Location: connexion');
+    header('Location: index.php');
     exit();
 }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <?php include("head.html"); ?>
+    <?php include("architecture/head.html"); ?>
     <link rel="stylesheet" type="text/css" href="css/accueil_ss.css" media="screen" />
 </head>
 
 <body id="body">  
 
-    <?php include("header.php"); ?>
+    <?php include("architecture/header.php"); ?>
 
     <form class="form-inline" id="f_recherche">
         <div>
