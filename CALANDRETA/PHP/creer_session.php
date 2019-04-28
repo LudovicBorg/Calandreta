@@ -1,5 +1,5 @@
 <?php
-$con=mysqli_connect("localhost", "MALET", "Malet@root81","calandreta");
+$con=mysqli_connect("localhost", 'root', 'Toto123', "calandreta");
 if(mysqli_connect_errno($con))
 {
 	echo "Erreur de connexion : ".mysqli_connect_error();
@@ -40,6 +40,6 @@ mysqli_close($con);
 			<a href="../connexion">ici</a>.
 		</div>
 	</form>
-	<?php header("refresh:10;url=../connexion"); ?>
+	<?php header("refresh:10;url=../index.php"); ?>
 </body>
 </html>

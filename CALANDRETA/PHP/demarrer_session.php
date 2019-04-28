@@ -1,12 +1,12 @@
 <?php
-$con=mysqli_connect("localhost", "MALET", "Malet@root81","calandreta");
+$con=mysqli_connect("localhost", 'root', 'Toto123' ,"calandreta");
 if(mysqli_connect_errno($con))
 {
 	echo "Erreur de connexion : ".mysqli_connect_error();
 }
 else
 {
-	$email = $_POST["email"];
+	$email = $_POST["identifiant"];
 	$password = $_POST["password"];
 		//On sélectionne l'enregistrement correspondant aux identifiants
 	$sql= "SELECT * FROM utilisateurs WHERE utilisateurs.email='$email' AND utilisateurs.password='$password'";
@@ -26,11 +26,16 @@ else
 		$_SESSION['prenom'] = $row['prenom'];
 		$_SESSION['role'] = $row['role'];
 		
-		echo "1";
+		// echo "1";
+		header('Location: ../accueil.php');
 	}
 	else
 	{
-		echo "0";
+		// echo "0";
+		echo "<script language=\"javascript\">";
+		echo "alert('Erreur de connexion, veuillez réessayer !')";
+		echo "</script>";
+		header('Refresh: 0.5; ../index.php');
 	}
 }
 
