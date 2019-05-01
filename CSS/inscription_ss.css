@@ -1,0 +1,41 @@
+#f_candidature{
+    box-shadow: -15px 12px 35px -10px rgba(0,0,0,0.35);
+    height: 10%;
+    width: 60%;
+    margin-left: 6%;
+    margin-top: 2%;
+    padding: 1% 1%;
+}
+
+#nom, #prenom{
+    margin-top: 3%;
+}
+#nom{
+    margin-left: 3%;
+}
+
+button{
+    margin-bottom: 3%;
+}
+
+#titre_form{
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+}
+
+#form_titre{
+    background-color: #86C4B5;
+    position: relative;
+    width: 20px;
+}
+
+form{
+    background-color: white;
+    display: inline-block;
+    position: relative;
+    float: left;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 2%;
+    margin-left: 2%;
+}

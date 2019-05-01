@@ -1,0 +1,28 @@
+/*=====Style du tableau=====*/
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: white;
+    border: 1px solid black;
+}
+td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+th {
+    border: 1px solid black;
+    padding: 8px;
+}
+table tr:hover {
+  background-color: #CCCCCC;
+}
+table tr {
+  background-color: #FFFFFF;
+}
+table th {
+    background-color: #86C4B5; 
+    color: white;
+    border: 1px solid black;
+}
+/*=====Fin style du tableau=====*/

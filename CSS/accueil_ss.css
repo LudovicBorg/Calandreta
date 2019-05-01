@@ -1,0 +1,37 @@
+#f_recherche{
+    background-color: #343A40;
+    margin-top: 10px;
+    border-radius: 5px;
+    width: auto;
+}
+
+#f_bienvenue{
+    background-color: white;
+    margin-top: 15px;
+    box-shadow: -15px 12px 35px -10px rgba(0,0,0,0.35);
+    height: 250px;
+    border-radius: 10px;
+}
+
+form{
+    display: inline-block;
+    position: relative;
+    float: left;
+    height: auto;
+    width: 96%;
+    margin-left: 2%;
+}
+
+#t1{
+    margin-left: 2%;
+}
+
+div{
+    margin: 5px;
+}
+
+#search{
+    background-color: #86C4B5 ;
+  color: #F8F9FA ;
+  border: 1px solid #86C4B5 ;
+}
