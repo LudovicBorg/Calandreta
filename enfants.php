@@ -30,47 +30,57 @@ $sql0 = $con->query("SELECT id_user FROM utilisateurs WHERE email='".$user."'");
 $req0 = $sql0->fetch_row();
 // echo $req0[0];
 //On récupère nom et prénom des enfants
-$sql1 = $con->query("SELECT prenom, nom, datenaissance, classe FROM enfants WHERE parent1='".$req0[0]."' OR parent2='".$req0[0]."'");
+$sql1 = $con->query("SELECT id_enfant, prenom, nom, datenaissance, classe FROM enfants WHERE parent1='".$req0[0]."' OR parent2='".$req0[0]."'");
 $req1 = $sql1->fetch_all();
 $ligne = $sql1->num_rows;
+
 ?>
     	<h1>Vos enfants</h1>
     	<table class="table table-bordered table-condensed table-body-center">
             <thead>
                 <tr>
-                  <th style="width: 25%;"><center>Prénom</center></th>
-                  <th style="width: 25%;"><center>Nom</center></th>
-                  <th style="width: 25%;"><center>Date de naissance</center></th>
-                  <th style="width: 25%;"><center>Classe</center></th>
+                  <th style="width: 20%;"><center>Prénom</center></th>
+                  <th style="width: 20%;"><center>Nom</center></th>
+                  <th style="width: 20%;"><center>Date de naissance</center></th>
+                  <th style="width: 20%;"><center>Classe</center></th>
+                  <th style="width: 20%;"><center>Gestion</center></th>
                 </tr>
             </thead>
             <tbody>
 <?php
+
 for($a = 0; $a < $ligne; $a++){
-	echo '<tr id="tr_'.$a.'">';
+	echo '<tr id="'.$a.'">';
 	echo ' <td data-title="Prénom">';
-	echo $req1[$a][0];
-	echo '</td>';
-	echo ' <td data-title="Nom">';
 	echo $req1[$a][1];
 	echo '</td>';
-	echo ' <td data-title="Date de naissance">';
+	echo ' <td data-title="Nom">';
 	echo $req1[$a][2];
+	echo '</td>';
+	echo ' <td data-title="Date de naissance">';
+	echo $req1[$a][3];
 	echo '</td>';
 	// $sql2 = $con->query("SELECT classe FROM classe WHERE classe_id='".$req1[$a][3]."'");
 	// $req2 = $sql2->fetch_row();
 	echo ' <td data-title="Classe">';
-	echo $req1[$a][3];
+	$sqlclasse = $con->query("SELECT classe FROM classe WHERE id_classe='".$req1[$a][4]."'");
+	$reqclasse = $sqlclasse->fetch_row();
+	echo $reqclasse[0];
+	echo '</td>';
+	echo ' <td data-title="Gestion">';
+	echo '<button class="btn btn-dark" id="Modifier">Modifier</button>';
+	echo '<button class="btn btn-dark" id="Supprimer" onclick="supprimerenfant('.$req1[$a][0].');">Supprimer</button>';
 	echo '</td>';
 	echo '</tr>';
 }   
-?>                                    
+?>       
+
             </tbody>
           </table>
           </div>
      <div class="container">
     	<h1>Ajouter un enfant</h1>
-    		<form name="enfant" id="f_candidature" action="PHP/traitementajouterenfants.php"  method="POST" >
+    		<form name="enfant" id="f_candidature" action="traitement_ajouter_enfant.php"  method="POST" >
         	<div class="form-row">
             	<div class="form-group col-md-6">
                 	<label for="inputNom">Nom</label>
@@ -88,7 +98,7 @@ for($a = 0; $a < $ligne; $a++){
             	</div>
            		<div class="form-group col-md-6">
                 	<label for="inputClasse">Classe</label>
-						<select class="form-control" name="classe" >
+						<select class="form-control" name="classe" id="inputclasse">
               				<option value="" selected>Sélectionner une classe</option>
               				<option value="Toute petite section">Toute petite section</option>
               				<option value="Petite section">Petite section</option>
@@ -102,10 +112,14 @@ for($a = 0; $a < $ligne; $a++){
                         </select>
           		</div>
             </div>
-            <center>
+            <div id="boutons">
         <a href="accueil.php" class="btn btn-dark" id="Annuler">Annuler</a>
-        <input type="submit" class="btn btn-dark" value="Ajouter" id="Ajouter">
-    		</center>
-    </form>
-</div>
+        <input type="submit" class="btn btn-dark" id="Ajouter" value="Ajouter">
+    </div>
+    	</form>
+    </div>
+    <script type="text/javascript" src="JS/supprimerenfant.js" charset="utf-8"></script>
+</body>
+</html>
+
 
