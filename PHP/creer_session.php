@@ -40,6 +40,6 @@ mysqli_close($con);
 			<a href="../connexion">ici</a>.
 		</div>
 	</form>
-	<?php header("refresh:10;url=../index.php"); ?>
+	<?php header("refresh:5;url=../index.php"); ?>
 </body>
 </html>
