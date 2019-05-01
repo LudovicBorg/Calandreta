@@ -26,3 +26,22 @@ table th {
     border: 1px solid black;
 }
 /*=====Fin style du tableau=====*/
+/*=====Style bouton=====*/
+#Modifier{
+	margin-right: 2%;
+}
+#Supprimer{
+	margin-left: 2%;
+}
+#boutons{
+    text-align: center;
+    margin-bottom: 4px; 
+}
+#Annuler{
+    margin-right: 4px;
+    margin-left: -20px;
+}
+#Ajouter{
+    margin-left: 4px;
+}
+/*=====Fin style bouton=====*/
