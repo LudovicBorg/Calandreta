@@ -1,17 +1,14 @@
-function supprimerenfant(id){
+function modifier_prix(){
   var xmlhttp;
-  console.log(id);
   xmlhttp = new XMLHttpRequest();
 
   xmlhttp.onreadystatechange = function(){
     if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-      document.getElementById(id).remove();
-      alert("La suppression a été effectuée.");
-    } else {
-
+      alert("La modification a été effectuée");
     }
   }
-  xmlhttp.open("POST", "PHP/supprimerenfant.php", true);
+
+  xmlhttp.open("POST", "PHP/traitement_modifier_prix.php", true);
   xmlhttp.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded');
-  xmlhttp.send("id=" + id);
+  xmlhttp.send('prix=' + document.getElementsByName('prix')[0].value);
 }
