@@ -1,5 +1,5 @@
 <?php
-include("architecture/connexion.php");
+include("../architecture/connexion.php");
 $user = $_SESSION['user'];
 ?>
 <!DOCTYPE html>

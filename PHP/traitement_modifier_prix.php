@@ -1,5 +1,5 @@
 <?php
-include("architecture/connexion.php");
+include("../architecture/connexion.php");
 // $user = $_SESSION['user'];
 // $sqlrole = $con->query("SELECT role FROM utilisateurs WHERE email='".$user."'");
 // $reqrole = $sqlrole->fetch_row(); 

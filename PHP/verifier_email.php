@@ -1,7 +1,6 @@
 <?php
-include("architecture/connexion.php");
-else
-{
+include("../architecture/connexion.php");
+
 	$email = $_POST["email"];
 	
 		//On sélectionne l'enregistrement correspondant aux identifiants
@@ -21,7 +20,6 @@ else
 			//l'adresse n'existe pas encore
 		echo "1";
 	}
-}
 
 //Fermeture de la connexion
 mysqli_close($con);
