@@ -1,9 +1,5 @@
 <?php
-$con=mysqli_connect("localhost", 'root', 'Toto123' ,"calandreta");
-if(mysqli_connect_errno($con))
-{
-	echo "Erreur de connexion : ".mysqli_connect_error();
-}
+include("architecture/connexion.php");
 else
 {
 	$email = $_POST["identifiant"];

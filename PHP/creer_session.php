@@ -1,9 +1,5 @@
 <?php
-$con=mysqli_connect("localhost", 'root', 'Toto123', "calandreta");
-if(mysqli_connect_errno($con))
-{
-	echo "Erreur de connexion : ".mysqli_connect_error();
-}
+include("architecture/connexion.php");
 else
 {
 	$nom = $_POST["nom"];
@@ -18,7 +14,7 @@ else
 	$code_postal = $_POST["cp"];
 
 	//Requête d'intégration dans BDD
-	$sql = ("INSERT INTO utilisateurs (nom, prenom, email, password, telephone1, telephone2, adresse, adresse2, ville, code_postal, role) VALUES ('$nom', '$prenom', '$email', '$password', '$telephone1', '$telephone2', '$adresse1', '$adresse2', '$ville', '$code_postal', '0')");
+	$sql = ("INSERT INTO utilisateurs (nom, prenom, email, password, telephone1, telephone2, adresse, adresse2, ville, code_postal, role) VALUES ('$nom', '$prenom', '$email', '$password', '$telephone1', '$telephone2', '$adresse1', '$adresse2', '$ville', '$code_postal', '1')");
 	//On envoie la requête
 	$req = mysqli_query($con, $sql) or die('Erreur SQL !<br>'.mysqli_error($con));
 
