@@ -1,22 +1,7 @@
 <?php
-//on actualise la session
-session_start();
-// Désactiver le rapport d'erreurs
-error_reporting(0);
-//On vérifie qu'elle soit bien définie
-if(empty($_SESSION['user']) || empty($_SESSION['password']))
-{
-    header('Location: index.php');
-    exit();
-}
-$con=mysqli_connect("localhost", 'root', 'Toto123' ,"calandreta");
-if(mysqli_connect_errno($con))
-{
-  echo "Erreur de connexion : ".mysqli_connect_error();
-}
+include("architecture/connexion.php");
 $user = $_SESSION['user'];
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,10 +11,18 @@ $user = $_SESSION['user'];
 </head>
 <body id="body">
     <?php include("architecture/header.php"); ?>
+    <?php 
+$sqlrole = $con->query("SELECT role FROM utilisateurs WHERE email='".$user."'");
+$reqrole = $sqlrole->fetch_row(); 
+$role = $reqrole[0];
+if ($role == 2 OR $role == 4){
+  echo '<a href="responsable_cantine.php" class="btn btn-dark" id="Administration_cantine">Administration Cantine</a>';
+}
+
+?>
     <br />
     <div class="container" id="solde">
-      <!-- <div class="col-sm-6"> -->
-      <h1>Solde :</h1>
+          <h1>Solde :</h1>
 <?php
 //On récupère id utilisateur connecté
 $sql0 = $con->query("SELECT id_user FROM utilisateurs WHERE email='".$user."'");
@@ -50,10 +43,6 @@ if ($reqsolde[0][1]>0){
   echo '</div>';
 }
 ?>
-      <!-- </div> -->
-<!--       <div class="col-sm-6">
-        <h1>Historique :</h1>
-      </div> -->
     </div>
    <div class="container">
           <h1>Enfant :</h1>
@@ -62,16 +51,18 @@ if ($reqsolde[0][1]>0){
             <select class="form-control" name="nom_enfant" >
 <?php
 //On récupère nom et prénom des enfants
-$sql1 = $con->query("SELECT prenom, nom FROM enfants WHERE parent1='".$req0[0]."' OR parent2='".$req0[0]."'");
+$sql1 = $con->query("SELECT id_enfant, prenom, nom FROM enfants WHERE parent1='".$req0[0]."' OR parent2='".$req0[0]."'");
 $req1 = $sql1->fetch_all();
 $ligne = $sql1->num_rows;
 
 // echo $ligne;
 for ($a = 0; $a < $ligne; $a++){
-  echo '<option>';
+  echo '<option value="';
   echo $req1[$a][0];
-  // echo ' ';
-  // echo $req1[$a][1];
+  echo '">';
+  echo $req1[$a][1];
+  echo ' ';
+  echo $req1[$a][2];
   echo '</option>';
 }
 ?>
@@ -164,17 +155,17 @@ echo '<input name="annee" type="hidden" value="'.$annee.'">';
 for ($a = 0; $a < $ligne; $a++){
   echo '<tr id="'.$a.'">';
   echo ' <td data-title="Enfant">';
-  echo $req1[$a][0];
+  echo $req1[$a][1];
   echo '</td>';
   // Récupération de l'id de l'enfant
-$sqlid_enfant = $con->query("SELECT id_enfant FROM enfants WHERE prenom='".$req1[$a][0]."'");
-$id_enfant = $sqlid_enfant->fetch_row();
-$id_enfant = $id_enfant[0];
+// $sqlid_enfant = $con->query("SELECT id_enfant FROM enfants WHERE prenom='".$req1[$a][0]."'");
+// $id_enfant = $sqlid_enfant->fetch_row();
+// $id_enfant = $id_enfant[0];
   echo '<td data-title="Lundi">';
 $sqlsemaine = $con->query("SELECT id_semaine FROM semaines WHERE numero='".$week."'");
 $id_semaine = $sqlsemaine->fetch_row();
 $id_semaine = $id_semaine[0];
-$sqllecturecantine = $con->query("SELECT lundi, mardi, jeudi, vendredi FROM cantine WHERE enfant='".$id_enfant."' AND semaine='".$id_semaine."'");
+$sqllecturecantine = $con->query("SELECT lundi, mardi, jeudi, vendredi FROM cantine WHERE enfant='".$req1[$a][0]."' AND semaine='".$id_semaine."'");
 $reqlecturecantine = $sqllecturecantine->fetch_all();
 echo $reqlecturecantine[0][0];
   echo '</td>';
@@ -190,10 +181,44 @@ echo $reqlecturecantine[0][3];
   echo '</tr>';
 }
 ?>
-                
-
             </tbody>
           </table>
-
-
 </div>
+          <div class="container">
+        <h1>Historique :</h1>
+<?php
+//On récupère l'union de deux parents
+$sqlunion = $con->query("SELECT id_union FROM union_parents WHERE parent1='".$req0[0]."' OR parent2='".$req0[0]."'");
+$requnion = $sqlunion->fetch_row();
+
+//On récupère le montant du solde
+$sqlcheque = $con->query("SELECT montant_cheque, date_cheque FROM cheques WHERE union_parents ='".$requnion[0]."' ORDER BY date_cheque DESC");
+$reqcheque = $sqlcheque->fetch_all();
+$ligne = $sqlcheque->num_rows;
+?>
+<table class="table table-bordered table-condensed table-body-center">
+            <thead>
+                <tr>
+                  <th style="width: 50%;">Date</th>
+                  <th style="width: 50%;">Montant</th>
+                </tr>
+            </thead>
+            <tbody>
+<?php
+if ($ligne > 3){
+  $ligne = 3;
+}
+for ($a = 0; $a < $ligne; $a++){
+  echo '<tr id="'.$a.'">';
+  echo ' <td data-title="Date">';
+  echo $reqcheque[$a][1];
+  echo '</td>';
+  echo '<td data-title="Montant">';
+  echo $reqcheque[$a][0];
+  echo '</td>';
+  echo '</tr>';
+}
+?>
+            </tbody>
+          </table>
+        </div>

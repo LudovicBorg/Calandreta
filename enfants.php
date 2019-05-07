@@ -1,17 +1,5 @@
 <?php
-//on actualise la session
-session_start();
-//On vérifie qu'elle soit bien définie
-if(empty($_SESSION['user']) || empty($_SESSION['password']))
-{
-    header('Location: index.php');
-    exit();
-}
-$con=mysqli_connect("localhost", 'root', 'Toto123' ,"calandreta");
-if(mysqli_connect_errno($con))
-{
-  echo "Erreur de connexion : ".mysqli_connect_error();
-}
+include("architecture/connexion.php");
 $user = $_SESSION['user'];
 ?>
 <!DOCTYPE html>
@@ -50,7 +38,9 @@ $ligne = $sql1->num_rows;
 <?php
 
 for($a = 0; $a < $ligne; $a++){
-	echo '<tr id="'.$a.'">';
+	echo '<tr id="';
+  echo $req1[$a][0];
+  echo '">';
 	echo ' <td data-title="Prénom">';
 	echo $req1[$a][1];
 	echo '</td>';
@@ -69,7 +59,9 @@ for($a = 0; $a < $ligne; $a++){
 	echo '</td>';
 	echo ' <td data-title="Gestion">';
 	echo '<button class="btn btn-dark" id="Modifier">Modifier</button>';
-	echo '<button class="btn btn-dark" id="Supprimer" onclick="supprimerenfant('.$req1[$a][0].');">Supprimer</button>';
+	echo '<button class="btn btn-dark" id="Supprimer" onclick="supprimerenfant(';
+  echo $req1[$a][0];
+  echo ');">Supprimer</button>';
 	echo '</td>';
 	echo '</tr>';
 }   

@@ -1,20 +1,28 @@
 <?php
 include("architecture/connexion.php");
+$user = $_SESSION['user'];
+$sqlrole = $con->query("SELECT role FROM utilisateurs WHERE email='".$user."'");
+$reqrole = $sqlrole->fetch_row(); 
+$role = $reqrole[0];
+if ($role != 4){
+  echo "<script language=\"javascript\">";
+  echo "alert('Vous n'avez pas les droits pour accéder à cette page !')";
+  echo "</script>";
+  header('Refresh: 0.5; accueil.php');
+  exit();
+}
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <?php include("architecture/head.html"); ?>
-    <link rel="stylesheet" type="text/css" href="css/inscription_ss.css" media="screen" />
-    <script src="js/verifier_non_duplicat.js" type="text/javascript"></script>
+    <link href='CSS/admin.css' rel='stylesheet' />
 </head>
-
-<body id="body">
-
-    
-
-    <form id="form_titre"><h1 class="h" id="titre_form">INSCRIPTION</h1></form>
-
+<body id="body">  
+  <?php include("architecture/header.php"); ?>
+  <br />
+  <div class="container">
+    <h1>Ajouter un parent :</h1>
     <form name="candidature" id="f_candidature" action="PHP/creer_session.php" onsubmit="return verifier_format_email(document.candidature.email)" method="POST" >
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -64,25 +72,75 @@ include("architecture/connexion.php");
               <input type="text" class="form-control" name="cp" id="inputCp" required>
           </div>
         </div>
-        <a href="index.php" class="btn btn-dark">Annuler</a>
+        <div id="Inscription">
         <input type="submit" class="btn btn-dark" value="Inscription">
-
+      </div>
     </form>
 
 <script type="text/javascript">
 
     function verifier_format_email(mail) {
-    	var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    	if(mail.value.match(mailformat))
-    	{
-    		return true;
-    	}
-    	else
-    	{
-    		alert("Adresse mail non valide !");
-    		return false;
-    	}
+      var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      if(mail.value.match(mailformat))
+      {
+        return true;
+      }
+      else
+      {
+        alert("Adresse mail non valide !");
+        return false;
+      }
     }
 </script>
-</body>
-</html>
+
+  </div>
+  <div class="container">
+    <h1>Attribuer un role :</h1>
+      <form name="candidature" id="f_candidature" method="POST" action="traitement_profil.php">
+        <div class="form-group">
+          <label>Utilisateur : </label>
+            <select class="form-control" name="utilisateur" >
+<?php
+//On récupère les utilisateurs
+$sql0 = $con->query("SELECT id_user, prenom, nom FROM utilisateurs");
+$req0 = $sql0->fetch_all();
+$ligne = $sql0->num_rows;
+// echo $ligne;
+for ($a = 0; $a < $ligne; $a++){
+  echo '<option value="';
+  echo $req0[$a][0];
+  echo '">';
+  echo $req0[$a][1];
+  echo ' ';
+  echo $req0[$a][2];
+  echo '</option>';
+}
+?>
+            </select>
+          </div>
+        <div class="form-group">
+          <label>Profil :</label>
+            <select class="form-control" name="profils" >
+<?php
+//On récupère les utilisateurs
+$sql1 = $con->query("SELECT id_roles, nom FROM roles");
+$req1 = $sql1->fetch_all();
+$ligne = $sql1->num_rows;
+// echo $ligne;
+for ($a = 0; $a < $ligne; $a++){
+  echo '<option value="';
+  echo $req1[$a][0];
+  echo '">';
+  echo $req1[$a][1];
+  echo '</option>';
+}
+?>
+          </select>
+        </div>
+        <div id="Inscription">
+        <input type="submit" class="btn btn-dark" value="Attribuer">
+      </div>
+
+
+    </body>
+    </html>

@@ -1,12 +1,5 @@
 <?php
-//on actualise la session
-session_start();
-//On vérifie qu'elle soit bien définie
-if(empty($_SESSION['user']) || empty($_SESSION['password']))
-{
-    header('Location: index.php');
-    exit();
-}
+include("architecture/connexion.php");
 ?>
 <!DOCTYPE html>
 <html>
