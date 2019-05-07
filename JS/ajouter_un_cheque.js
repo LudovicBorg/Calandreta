@@ -4,11 +4,11 @@ function ajouter_un_cheque(){
 
   xmlhttp.onreadystatechange = function(){
     if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-      alert("La modification a été effectuée");
+      alert("Le cheque a été ajouté et le solde mit à jour");
     }
   }
 
-  xmlhttp.open("POST", "PHP/traitement_modifier_prix.php", true);
+  xmlhttp.open("POST", "PHP/traitement_ajouter_cheque.php", true);
   xmlhttp.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded');
-  xmlhttp.send('prix=' + document.getElementsByName('prix')[0].value);
+  xmlhttp.send('date_cheque=' + document.getElementsByName('date_cheque')[0].value + "&numero_cheque=" + (document.getElementsByName("numero_cheque")[0]).value + "&montant_cheque=" + (document.getElementsByName("montant_cheque")[0]).value + "&parents=" + (document.getElementsByName("parents")[0]).value);
 }
