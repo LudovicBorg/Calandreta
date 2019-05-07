@@ -55,17 +55,17 @@ $prix = $prix[0];
         <div class="form-row">
               <div class="form-group col-md-6">
                   <label>Date du chèque :</label>
-                  <input type="text" class="form-control" name="date_cheque" placeholder="Nom" required>
+                  <input type="date" class="form-control" name="date_cheque" required>
               </div>
               <div class="form-group col-md-6">
                   <label>Numéro du chèque :</label>
-                  <input type="text" class="form-control" name="prenom" placeholder="Prénom" required>
+                  <input type="text" class="form-control" name="prenom" required>
               </div>
           </div>
           <div class="form-row">
               <div class="form-group col-md-6">
                   <label>Montant :</label>
-                  <input type="text" class="form-control" name="montant_cheque"  placeholder="Montant" required>
+                  <input type="text" class="form-control" name="montant_cheque" required>
               </div>
               <div class="form-group col-md-6">
                   <label>Parents :</label>
@@ -76,16 +76,10 @@ $sqlparents = $con->query("SELECT id_union, parent1, parent2 FROM union_parents"
 $reqparents = $sqlparents->fetch_all();
 $ligne = $sqlparents->num_rows;
 // echo $ligne;
-$sqlcountligneuser = $con->query("SELECT id_user FROM utilisateurs");
-$reqcountligneuser = $sqlcountligneuser->fetch_all();
-$ligne2 = $reqcountligneuser->num_rows;
-
-for ($a = 0; $a < $ligne2; $a++){
-//On récupère les noms des utilisateurs
-$sqlnoms = $con->query("SELECT nom, prenom FROM utilisateurs WHERE id_user = '".$reqparents[$a][0]."'");
-$reqnoms = $sqlnoms->fetch_all();
-}
+//On récupère ensuite les noms et on les affiches dans une liste
 for($a = 0; $a < $ligne; $a++){
+$sqlnoms = $con->query("SELECT prenom, nom FROM utilisateurs WHERE id_user='".$reqparents[$a][1]."' OR id_user='".$reqparents[$a][2]."'"); 
+$reqnoms = $sqlnoms->fetch_all();
     echo '<option value="';
   echo $reqparents[$a][0];
   echo '">';
@@ -101,14 +95,10 @@ for($a = 0; $a < $ligne; $a++){
 ?>
             </select>
           </div>
-<?php
-echo $reqparents[0][0];
-echo $reqnoms[0][0];
-echo $reqnoms[0][1];
-echo $reqnoms[1][0];
-echo $reqnoms[1][1];
-?>
           </div>
+          <div id="ajouter">
+        <button class="btn btn-dark" id="ajouter" onclick="ajouter_un_cheque()">Ajouter</button>
+      </div>
         </form>
   </div>
   
