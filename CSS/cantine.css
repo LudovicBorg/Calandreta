@@ -161,3 +161,15 @@ input:checked + .slider:after {
   margin-left: 20px;
   margin-top: 12px;
 }
+/*======Partie responsable cantine=====*/
+#ajouter{
+  text-align: center;
+}
+#ajouter_un_cheque{
+    box-shadow: -15px 12px 35px -10px rgba(0,0,0,0.35);
+    padding: 1% 1%;
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}

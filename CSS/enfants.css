@@ -45,3 +45,11 @@ table th {
     margin-left: 4px;
 }
 /*=====Fin style bouton=====*/
+#ajouter_un_enfant{
+    box-shadow: -15px 12px 35px -10px rgba(0,0,0,0.35);
+    padding: 1% 1%;
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
