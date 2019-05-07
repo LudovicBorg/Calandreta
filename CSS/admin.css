@@ -1,0 +1,26 @@
+#f_candidature{
+    box-shadow: -15px 12px 35px -10px rgba(0,0,0,0.35);
+    padding: 1% 1%;
+}
+
+#nom, #prenom{
+    margin-top: 3%;
+}
+#nom{
+    margin-left: 3%;
+}
+
+button{
+    margin-bottom: 3%;
+}
+
+form{
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-bottom: 2%;
+}
+#Inscription {
+    text-align: center;
+}

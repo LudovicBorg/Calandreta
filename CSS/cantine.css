@@ -129,3 +129,35 @@ input:checked + .slider:after {
   font-weight: bold;
   font-size:24px;
 }
+/*=====Partie Bouton Administration Cantine=====*/
+#Administration_cantine{
+  width: 100%;
+}
+/*=====Partie Bouton number=====*/
+#french-hens {
+  float: left;
+  width: 40px;
+  font: bold 20px Helvetica, sans-serif;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.button {
+  margin: 16px 0 0 5px;
+  text-indent: -9999px;
+  cursor: pointer;
+  width: 29px;
+  height: 29px;
+  float: left;
+  text-align: center;
+  background: url(../Images/buttons.png) no-repeat;
+}
+.dec {
+  background-position: 0 -29px;
+}
+#Valider2{
+  background-color: #86C4B5; 
+  border-color: #86C4B5;
+  margin-left: 20px;
+  margin-top: 12px;
+}
