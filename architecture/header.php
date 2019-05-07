@@ -3,7 +3,7 @@
 
 	<nav id="nav" class="navbar navbar-light bg-light">
 
-		<a href="accueil"><img src="images/logo_calandreta.png" id="logo"/></a>
+		<a href="accueil.php"><img src="images/logo_calandreta.png" id="logo"/></a>
 
 		<ul id="list_b_nav" class="nav justify-content-center">
 			<li class="nav-item"><a href="accueil.php" id="b_nav" class="btn btn-light">Accueil</a></li>
