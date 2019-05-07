@@ -70,7 +70,7 @@ for($a = 0; $a < $ligne; $a++){
             </tbody>
           </table>
           </div>
-     <div class="container">
+     <div class="container" id="ajouter_un_enfant">
     	<h1>Ajouter un enfant</h1>
     		<form name="enfant" id="f_candidature" action="traitement_ajouter_enfant.php"  method="POST" >
         	<div class="form-row">
@@ -103,6 +103,25 @@ for($a = 0; $a < $ligne; $a++){
               				<option value="CM2">CM2</option>
                         </select>
           		</div>
+              <div class="form-group col-md-12">
+                <label for="inputparent2">Second parent</label>
+            <select class="form-control" name="parent2" id="inputparent2">
+                      <option value="" selected>Sélectionner un parent</option>
+<?php
+$sqlnomsparents = $con->query("SELECT id_user, nom, prenom FROM utilisateurs");
+$reqnomsparents = $sqlnomsparents->fetch_all();
+$ligne2 = $sqlnomsparents->num_rows;
+for ($a=0; $a<$ligne2; $a++){
+  echo '<option value="';
+  echo $reqnomsparents[$a][0];
+  echo '">';
+  echo $reqnomsparents[$a][1];
+  echo ' ';
+  echo $reqnomsparents[$a][2];
+}
+?>
+                        </select>
+              </div>
             </div>
             <div id="boutons">
         <a href="accueil.php" class="btn btn-dark" id="Annuler">Annuler</a>

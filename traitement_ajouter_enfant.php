@@ -1,7 +1,6 @@
 <?php
 include("architecture/connexion.php");
-else
-{
+
 $user = $_SESSION['user'];
 //On récupère id utilisateur connecté
 $sql0 = $con->query("SELECT id_user FROM utilisateurs WHERE email='".$user."'");
@@ -11,6 +10,7 @@ $req0 = $sql0->fetch_row();
 	$prenom = $_POST["prenom"];
 	$datenaissance = $_POST["datenaissance"];
 	$classe = $_POST["classe"];
+	$id_parent2 = $_POST["parent2"];
 
 	//Récupération de l'id classe
 	$sqlidclasse = $con->query("SELECT id_classe FROM classe WHERE classe='".$classe."'");
@@ -18,11 +18,10 @@ $req0 = $sql0->fetch_row();
 	$id_classe = $id_classe[0];
 
 	//Requête d'intégration dans BDD
-	$sqlinsertenfant = ("INSERT INTO enfants (nom, prenom, datenaissance, classe, parent1) VALUES ('$nom', '$prenom', '$datenaissance', '$id_classe', '$req0[0]')");
+	$sqlinsertenfant = ("INSERT INTO enfants (nom, prenom, datenaissance, classe, parent1, parent2) VALUES ('$nom', '$prenom', '$datenaissance', '$id_classe', '$req0[0]', '$id_parent2')");
 	//On envoie la requête
 	$reqinsertenfant = mysqli_query($con, $sqlinsertenfant) or die('Erreur SQL !<br>'.mysqli_error($con));
 
-}
 
 //Fermeture de la connexion
 mysqli_close($con);

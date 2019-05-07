@@ -78,8 +78,11 @@ $parent2 = $reqrecupparent[0][1];
 $sqlprix = $con->query("SELECT montant FROM montant_cantine");
 $prix = $sqlprix->fetch_row();
 $prix = $prix[0];
-// Récupération du solde
-$sqlsolde = $con->query("SELECT id_solde, montant FROM solde WHERE parent1='".$parent1."' OR parent2='".$parent2."'");
+// On récupère l'id union des parents
+$sqlunionid = $con->query("SELECT id_union FROM union_parents WHERE parent1='".$parent1."' AND parent2='".$parent2."' OR parent1='".$parent2."' AND parent2='".$parent1."'");
+$id_union = $sqlunionid->fetch_row();
+//On récupère le montant du solde
+$sqlsolde = $con->query("SELECT id_solde, montant FROM solde WHERE union_parents='".$id_union[0]."'");
 $reqsolde = $sqlsolde->fetch_all();
 $id_solde = $reqsolde[0][0];
 $montant = $reqsolde[0][1];
@@ -107,8 +110,10 @@ if($lundi == 'OUI'){
     <script src="js/demarrer_session.js" type="text/javascript"></script>
 </head>
 <body id="body">
-    <?php include("architecture/header.php"); ?>
-        <div class="d-flex justify-content-center"> Enregistrement effectué.<br><br>Vous allez être redirigé vers la page cantine.<br><br>Si la redirection ne se fait pas, cliquez
-            <a href="cantine.php">ici</a>.
-    <?php header("refresh:2;url=cantine.php"); ?>
     <br />
+    <?php include("architecture/header.php"); ?>
+        <div class="d-flex justify-content-center"> Enregistrement effectué.<br><br>Vous allez être redirigé vers la page cantine.
+        </div>
+    <?php header("refresh:1;url=cantine.php"); ?>
+</body>
+</html>

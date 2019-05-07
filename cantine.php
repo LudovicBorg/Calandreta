@@ -28,8 +28,11 @@ if ($role == 2 OR $role == 4){
 $sql0 = $con->query("SELECT id_user FROM utilisateurs WHERE email='".$user."'");
 $req0 = $sql0->fetch_row();
 // echo $req0[0];
+// On récupère l'id union des parents
+$sqlunionid = $con->query("SELECT id_union FROM union_parents WHERE parent1='".$req0[0]."' OR parent2='".$req0[0]."'");
+$id_union = $sqlunionid->fetch_row();
 //On récupère le montant du solde
-$sqlsolde = $con->query("SELECT id_solde, montant FROM solde WHERE parent1='".$req0[0]."' OR parent2='".$req0[0]."'");
+$sqlsolde = $con->query("SELECT id_solde, montant FROM solde WHERE union_parents='".$id_union[0]."'");
 $reqsolde = $sqlsolde->fetch_all();
 if ($reqsolde[0][1]>0){
   echo '<div id="greensolde">';
