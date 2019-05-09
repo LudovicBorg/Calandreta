@@ -21,6 +21,13 @@ $req0 = $sql0->fetch_row();
 	$sqlinsertenfant = ("INSERT INTO enfants (nom, prenom, datenaissance, classe, parent1, parent2) VALUES ('$nom', '$prenom', '$datenaissance', '$id_classe', '$req0[0]', '$id_parent2')");
 	//On envoie la requête
 	$reqinsertenfant = mysqli_query($con, $sqlinsertenfant) or die('Erreur SQL !<br>'.mysqli_error($con));
+	//On regarde si id de l'union existe sinon on l'insere
+	$sqlidunion = query("SELECT id_union FROM union_parents WHERE parent1='".$req0[0]."' AND parent2='".$id_parent2."' OR parent1='".$id_parent2."' AND parent2='".$req0[0]."'");
+	$reqidunion = $sqlidunion->fetch_row();
+	if(empty($reqidunion[0])){
+		$sqlinsertunion = ("INSERT INTO union_parents (parent1, parent2) VALUES ('$req0[0]', '$id_parent2')");
+
+	}
 
 
 //Fermeture de la connexion
