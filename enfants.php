@@ -10,8 +10,36 @@ $user = $_SESSION['user'];
 </head>
 <body id="body">
     <?php include("architecture/header.php"); ?>
-    <br />
-    <div class="container">
+
+<!--===== Partie pour afficher l'ajout d'un enfant ou les enfants déjà présents =====-->
+<script>
+$(document).ready(function(){
+  $("#hide").click(function(){
+    $("#ajouter_un_enfant").hide();
+    $("#enfants").show();
+  });
+  $("#show").click(function(){
+    $("#ajouter_un_enfant").show();
+    $("#enfants").hide();
+    });
+});
+</script>
+<!--===== Fin du script =====-->
+<!--===== Navigation entre les enfants déjà présent et l'ajout d'un nouvel enfant =====-->
+      <div id="choix">
+        <div class="row">
+        <div class="col-sm-6">
+          <label id="hide">Vos enfants</label>
+          <input type="radio" id="hide" class="btn btn-dark">
+        </div>
+        <div class="col-sm-6">
+          <label id="show">Ajouter un enfant</label>
+          <input type="radio" id="show" class="btn btn-dark">
+        </div>
+      </div>
+      </div>
+   
+    <div class="container" id="enfants">
 <?php
 //On récupère id utilisateur connecté
 $sql0 = $con->query("SELECT id_user FROM utilisateurs WHERE email='".$user."'");
@@ -38,7 +66,11 @@ $ligne = $sql1->num_rows;
 <?php
 
 for($a = 0; $a < $ligne; $a++){
+  echo '<form action="modifier_enfant.php" method="POST">';
 	echo '<tr id="';
+  echo $req1[$a][0];
+  echo '">';
+  echo '<input type="hidden" name="id_enfant" value="';
   echo $req1[$a][0];
   echo '">';
 	echo ' <td data-title="Prénom">';
@@ -58,19 +90,20 @@ for($a = 0; $a < $ligne; $a++){
 	echo $reqclasse[0];
 	echo '</td>';
 	echo ' <td data-title="Gestion">';
-	echo '<button class="btn btn-dark" id="Modifier">Modifier</button>';
+	echo '<input type="submit" class="btn btn-dark" id="Modifier" value="Modifier">';
 	echo '<button class="btn btn-dark" id="Supprimer" onclick="supprimerenfant(';
   echo $req1[$a][0];
   echo ');">Supprimer</button>';
 	echo '</td>';
 	echo '</tr>';
+  echo '</form>';
 }   
 ?>       
 
             </tbody>
           </table>
           </div>
-     <div class="container" id="ajouter_un_enfant">
+     <div class="container" id="ajouter_un_enfant" style="display:none">
     	<h1>Ajouter un enfant</h1>
     		<form name="enfant" id="f_candidature" action="traitement_ajouter_enfant.php"  method="POST" >
         	<div class="form-row">
@@ -122,10 +155,46 @@ for ($a=0; $a<$ligne2; $a++){
 ?>
                         </select>
               </div>
+              <div class="form-group col-md-12">
+                <label for="inputparent2">Semaine type pour la cantine</label>
+              <table class="table table-bordered table-condensed table-body-center">
+            <thead>
+                <tr>
+                  <th style="width: 25%;">Lundi</th>
+                  <th style="width: 25%;">Mardi</th>
+                  <th style="width: 25%;">Jeudi</th>
+                  <th style="width: 25%;">Vendredi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="tr_1">
+                    <td data-title="Lundi">                     
+                        <label class="switch"><input type="checkbox" id="togBtn"  name="Lundi" value="OUI">
+                        <div class="slider round"></div>
+                        </label>              
+                  </td>
+                  <td data-title="Mardi">                     
+                        <label class="switch"><input type="checkbox" id="togBtn"  name="Mardi" value="OUI">
+                        <div class="slider round"></div>
+                        </label>             
+                  </td>
+                  <td data-title="Jeudi">                     
+                       <label class="switch"><input type="checkbox" id="togBtn" name="Jeudi" value="OUI">
+                       <div class="slider round" ></div>
+                       </label>                               
+                  </td>
+                  <td data-title="Vendredi">                    
+                       <label class="switch"><input type="checkbox" id="togBtn" name="Vendredi" value="OUI">
+                       <div class="slider round"></div>  
+                       </label>                               
+                  </td> 
+                  </tr>
+            </tbody>
+          </table>
             </div>
+          </div>
             <div id="boutons">
-        <a href="accueil.php" class="btn btn-dark" id="Annuler">Annuler</a>
-        <input type="submit" class="btn btn-dark" id="Ajouter" value="Ajouter">
+        <input type="submit" class="btn btn-dark" id="Modifier" value="Modifier">
     </div>
     	</form>
     </div>

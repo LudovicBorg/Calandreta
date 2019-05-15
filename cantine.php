@@ -8,6 +8,7 @@ $user = $_SESSION['user'];
     <?php include("architecture/head.html"); ?>
     <link href='CSS/cantine.css' rel='stylesheet' />
     <script src="js/demarrer_session.js" type="text/javascript"></script>
+    <script src="js/semaine_cantine.js" type="text/javascript"></script>
 </head>
 <body id="body">
     <?php include("architecture/header.php"); ?>
@@ -51,13 +52,15 @@ if ($reqsolde[0][1]>0){
           <h1>Enfant :</h1>
 <!--===== Code qui affiche les noms des différents enfants =====-->
           <form method="POST" action="traitementcantine.php">
-            <select class="form-control" name="nom_enfant" >
+            <select class="form-control" name="nom_enfant" id="id_enfant" onchange="update_week();">
 <?php
 //On récupère nom et prénom des enfants
 $sql1 = $con->query("SELECT id_enfant, prenom, nom FROM enfants WHERE parent1='".$req0[0]."' OR parent2='".$req0[0]."'");
 $req1 = $sql1->fetch_all();
 $ligne = $sql1->num_rows;
-
+?>
+            <option selected="selected" disabled>Selectionner votre enfant</option>
+<?php
 // echo $ligne;
 for ($a = 0; $a < $ligne; $a++){
   echo '<option value="';
@@ -115,22 +118,22 @@ echo '<input name="annee" type="hidden" value="'.$annee.'">';
             <tbody>
                 <tr id="tr_1">
                     <td data-title="Lundi">                     
-                        <label class="switch"><input type="checkbox" id="togBtn"  name="Lundi" value="OUI">
+                        <label class="switch"><input type="checkbox" id="lundi"  name="Lundi" value="OUI">
                         <div class="slider round"></div>
                         </label>              
                   </td>
                   <td data-title="Mardi">                     
-                        <label class="switch"><input type="checkbox" id="togBtn"  name="Mardi" value="OUI">
+                        <label class="switch"><input type="checkbox" id="mardi"  name="Mardi" value="OUI">
                         <div class="slider round"></div>
                         </label>             
                   </td>
                   <td data-title="Jeudi">                     
-                       <label class="switch"><input type="checkbox" id="togBtn" name="Jeudi" value="OUI">
+                       <label class="switch"><input type="checkbox" id="jeudi" name="Jeudi" value="OUI">
                        <div class="slider round" ></div>
                        </label>                               
                   </td>
                   <td data-title="Vendredi">                    
-                       <label class="switch"><input type="checkbox" id="togBtn" name="Vendredi" value="OUI">
+                       <label class="switch"><input type="checkbox" id="vendredi" name="Vendredi" value="OUI">
                        <div class="slider round"></div>  
                        </label>                               
                   </td> 

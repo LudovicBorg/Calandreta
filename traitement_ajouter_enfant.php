@@ -12,6 +12,25 @@ $req0 = $sql0->fetch_row();
 	$classe = $_POST["classe"];
 	$id_parent2 = $_POST["parent2"];
 
+	$lundi = $_POST['Lundi'];
+	$mardi = $_POST['Mardi'];
+	$jeudi = $_POST['Jeudi'];
+	$vendredi = $_POST['Vendredi'];
+
+
+if (!isset($lundi)){
+    $lundi="NON";
+}
+if (!isset ($mardi)){
+    $mardi="NON";
+} 
+if (!isset ($jeudi)){
+    $jeudi="NON";
+} 
+if (!isset ($vendredi)){
+    $vendredi="NON";
+} 
+
 	//Récupération de l'id classe
 	$sqlidclasse = $con->query("SELECT id_classe FROM classe WHERE classe='".$classe."'");
 	$id_classe = $sqlidclasse->fetch_row();
@@ -26,8 +45,15 @@ $req0 = $sql0->fetch_row();
 	$reqidunion = $sqlidunion->fetch_row();
 	if(empty($reqidunion[0])){
 		$sqlinsertunion = ("INSERT INTO union_parents (parent1, parent2) VALUES ('$req0[0]', '$id_parent2')");
-
 	}
+
+	//Récupération de l'id de l'enfant
+	$sqlidenfant = $con->query("SELECT id_enfant FROM enfants WHERE nom='$nom' AND prenom='$prenom'");
+	$id_enfant = $sqlidenfant->fetch_row();
+	$id_enfant = $id_enfant[0];
+
+	//On insert la semaine type
+	$sqlinsertsemainetype = $con->query("INSERT INTO cantine_type (lundi, mardi, jeudi, vendredi, enfant) VALUES ('$lundi', '$mardi', '$jeudi', '$vendredi', '$id_enfant')");
 
 
 //Fermeture de la connexion

@@ -27,11 +27,60 @@ if ($role != 2 AND $role != 4){
 </head>
 <body id="body">
     <?php include("architecture/header.php"); ?>
+    <!--===== Partie pour afficher différentes fonctionnalités =====-->
+<script>
+$(document).ready(function(){
+  $("#repas_but").click(function(){
+    $("#prix_container").hide();
+    $("#cheque_container").hide();
+    $("#soldes_container").hide();
+    $("#repas_container").show();
+  });
+  $("#cheque_but").click(function(){
+    $("#prix_container").hide();
+    $("#soldes_container").hide();
+    $("#repas_container").hide();
+    $("#cheque_container").show();
+    });
+  $("#soldes_but").click(function(){
+    $("#prix_container").hide();
+    $("#cheque_container").hide();
+    $("#repas_container").hide();
+    $("#soldes_container").show();
+    });
+  $("#prix_but").click(function(){
+    $("#cheque_container").hide();
+    $("#soldes_container").hide();
+    $("#repas_container").hide();
+    $("#prix_container").show();
+    });
+});
+</script>
+<!--===== Fin du script =====-->
+<!--===== Navigation =====-->
+      <div id="choix">
+        <div class="row" id="nav">
+        <div class="col-sm-3">
+          <label id="repas_but">Repas à commander</label>
+          <input type="radio" id="repas_but" class="btn btn-dark">
+        </div>
+        <div class="col-sm-3">
+          <label id="cheque_but">Déposer un chèque</label>
+          <input type="radio" id="cheque_but" class="btn btn-dark">
+        </div>
+        <div class="col-sm-3">
+          <label id="soldes_but">Voir les soldes</label>
+          <input type="radio" id="soldes_but" class="btn btn-dark">
+        </div>
+        <div class="col-sm-3">
+          <label id="prix_but">Modifier prix</label>
+          <input type="radio" id="prix_but" class="btn btn-dark">
+        </div>
+      </div>
+      </div>
     <br />
-<?php
-// Affichage de la reservation de la cantine
-?>
-<div class="container">
+
+<div class="container" id="repas_container">
       <div class="w3-content w3-display-container">
 <?php
 // Numéro de la semaine
@@ -101,14 +150,16 @@ $reqreponsecantine = $sqlreponsecantine->fetch_row();
             </tbody>
           </table>
           </div>
-          <?php
+        </div>
+
+
+  <div class="container" id="prix_container" style="display:none">
+<?php
 // Récupération du prix du repas
 $sqlprix = $con->query("SELECT montant FROM montant_cantine");
 $prix = $sqlprix->fetch_row();
 $prix = $prix[0];
 ?>
-<!-- <form action="traitement_modifier_prix.php" method="POST"> -->
-  <div class="container" id="repas">
     <div class="row">
       <div class="col-sm-6">
         <h1>Modifier le prix d'un repas :</h1>
@@ -122,8 +173,8 @@ $prix = $prix[0];
       </div>
     </div>
   </div>
-<!-- </form> -->
-  <div class="container" id="ajouter_un_cheque">
+
+  <div class="container" id="cheque_container" style="display:none">
     <h1> Ajouter un chèque : </h1>
         <div class="form-row">
               <div class="form-group col-md-6">
@@ -175,6 +226,10 @@ $reqnoms = $sqlnoms->fetch_all();
         <button class="btn btn-dark" id="ajouter" onclick="ajouter_un_cheque()">Ajouter</button>
       </div>
 
+  </div>
+
+  <div class="container" id="soldes_container" style="display:none">
+    toto
   </div>
   
 </body>
