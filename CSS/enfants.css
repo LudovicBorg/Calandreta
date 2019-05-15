@@ -53,3 +53,101 @@ table th {
     margin-top: 2%;
     margin-bottom: 2%;
 }
+/*=====Style bouton du tableau=====*/
+th {
+    text-align: center;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 90px;
+  height: 34px;
+  margin-top : 1px;
+  margin-bottom : -1px;
+}
+
+.switch input {
+  display:none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ca2222;
+  -webkit-transition: .4s;
+  transition: .4s;
+   border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2ab934;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(55px);
+}
+
+.slider:after {
+ content:'NON';
+ color: white;
+ display: block;
+ position: absolute;
+ transform: translate(-50%,-50%);
+ top: 50%;
+ left: 50%;
+ font-size: 10px;
+ font-family: Verdana, sans-serif;
+}
+
+input:checked + .slider:after {  
+  content:'OUI';
+}
+/*=====Fin du style pour les boutons du tableau=====*/
+
+/*=====Navigation=====*/
+#choix input {
+  display: none;
+}
+#choix label {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  padding: 6px;
+  cursor:pointer;
+  color: #fff;
+  background-color: #343a40;
+  border-color: #343a40;
+  margin-bottom: 0px;
+}
+#choix label:hover {
+    color: #fff;
+    background-color: #23272b;
+    border-color: #1d2124;
+}
+.row{
+    background-color: #343a40;
+
+}

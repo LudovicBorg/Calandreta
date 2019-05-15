@@ -165,11 +165,44 @@ input:checked + .slider:after {
 #ajouter{
   text-align: center;
 }
-#ajouter_un_cheque{
+#cheque_container{
     box-shadow: -15px 12px 35px -10px rgba(0,0,0,0.35);
     padding: 1% 1%;
     background-color: white;
     border-radius: 10px;
     margin-top: 2%;
     margin-bottom: 2%;
+}
+#prix_container{
+    box-shadow: -15px 12px 35px -10px rgba(0,0,0,0.35);
+    padding: 1% 1%;
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+/*=====Navigation=====*/
+#choix input {
+  display: none;
+}
+#choix label {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  padding: 6px;
+  cursor:pointer;
+  color: #fff;
+  background-color: #343a40;
+  border-color: #343a40;
+  margin-bottom: 0px;
+}
+#choix label:hover {
+    color: #fff;
+    background-color: #23272b;
+    border-color: #1d2124;
+}
+#nav{
+    background-color: #343a40;
+
 }
