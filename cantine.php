@@ -59,13 +59,19 @@ $(document).ready(function(){
       </div>
 
     <br />
-    <div class="container" id="solde">
-          <h1>Solde :</h1>
-<?php
+<?php 
 //On récupère id utilisateur connecté
 $sql0 = $con->query("SELECT id_user FROM 3il_utilisateurs WHERE email='".$user."'");
 $req0 = $sql0->fetch_row();
 // echo $req0[0];
+$sqlcountnombre_union = $con->query("SELECT COUNT(id_union) FROM 3il_union_parents WHERE parent1='".$req0[0]."' OR parent2='".$req0[0]."'");
+$reqcountnombre_union = $sqlcountnombre_union->fetch_row();
+// echo $reqcountnombre_union[0];
+if($reqcountnombre_union[0] == '1'){
+?>
+    <div class="container" id="solde">
+          <h1>Solde :</h1>
+<?php
 // On récupère l'id union des parents
 $sqlunionid = $con->query("SELECT id_union FROM 3il_union_parents WHERE parent1='".$req0[0]."' OR parent2='".$req0[0]."'");
 $id_union = $sqlunionid->fetch_row();
@@ -82,6 +88,61 @@ if ($reqsolde[0][1]>0){
   echo $reqsolde[0][1];
   echo ' €';
   echo '</div>';
+}
+?>
+<?php
+} elseif ($reqcountnombre_union[0] == 2) {
+?>
+<div class="container" id="solde">
+  <div class="row">
+    <div class="col-sm-6">
+        <h1>Solde :</h1>
+<?php
+// On récupère l'id union des parents
+$sqlunionid = $con->query("SELECT id_union FROM 3il_union_parents WHERE parent1='".$req0[0]."' OR parent2='".$req0[0]."'");
+$id_union = $sqlunionid->fetch_all();
+// echo $id_union[0][0];
+// echo $id_union[1][0];
+//On récupère le montant du solde
+$sqlsolde = $con->query("SELECT id_solde, montant FROM 3il_solde WHERE union_parents='".$id_union[0][0]."'");
+$reqsolde = $sqlsolde->fetch_all();
+if ($reqsolde[0][1]>0){
+  echo '<div id="greensolde">';
+  echo $reqsolde[0][1];
+  echo ' €';
+  echo '</div>';
+} else {
+  echo '<div id="redsolde">';
+  echo $reqsolde[0][1];
+  echo ' €';
+  echo '</div>';
+}
+?>
+    </div>
+    <div class="col-sm-6">
+        <h1>Solde :</h1>
+<?php
+//On récupère le montant du solde
+$sqlsolde = $con->query("SELECT id_solde, montant FROM 3il_solde WHERE union_parents='".$id_union[1][0]."'");
+$reqsolde = $sqlsolde->fetch_all();
+if ($reqsolde[0][1]>0){
+  echo '<div id="greensolde">';
+  echo $reqsolde[0][1];
+  echo ' €';
+  echo '</div>';
+} else {
+  echo '<div id="redsolde">';
+  echo $reqsolde[0][1];
+  echo ' €';
+  echo '</div>';
+}
+?>
+    </div>
+  </div>
+</div>
+
+
+<?php
 }
 ?>
     </div>

@@ -11,7 +11,6 @@ if ($role != 2 AND $role != 4){
   header('Location: accueil.php');
   exit();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -57,6 +56,7 @@ $(document).ready(function(){
 });
 </script>
 <!--===== Fin du script =====-->
+<a href="PHP/tache_planifiee_cantine.php" class="btn btn-dark" id="Administration_cantine">Génération manuelle de la semaine de la cantine</a>
 <!--===== Navigation =====-->
       <div id="choix">
         <div class="row" id="nav">
@@ -80,6 +80,7 @@ $(document).ready(function(){
       </div>
     <br />
 
+
 <div class="container" id="repas_container">
       <div class="w3-content w3-display-container">
 <?php
@@ -98,8 +99,6 @@ $date_vendredi = $objdate2->format('d/m/Y');
 $toutelacantine = $con->query("SELECT lundi, mardi, jeudi, vendredi, enfant FROM 3il_cantine WHERE semaine='".$reqweek[0]."'");
 $reqtoutelacantine = $toutelacantine->fetch_all();
 $ligne = $toutelacantine->num_rows;
-
-
 for ($a=0; $a<$ligne; $a++){
 // On recupere les noms des enfants
 $sqlnomsenfants = $con->query("SELECT nom, prenom FROM 3il_enfants WHERE id_enfant='".$reqtoutelacantine[$a][4]."'");
@@ -172,6 +171,9 @@ $prix = $prix[0];
           <button class="btn btn-primary" id="Valider2" onclick="modifier_prix()">Modifier </button>
       </div>
     </div>
+<p>
+  Pour un nombre à virgule, merci d'utiliser le point. Ex : 5.5
+</p>
   </div>
 
   <div class="container" id="cheque_container" style="display:none">
@@ -202,20 +204,22 @@ $ligne = $sqlparents->num_rows;
 // echo $ligne;
 //On récupère ensuite les noms et on les affiches dans une liste
 for($a = 0; $a < $ligne; $a++){
-$sqlnoms = $con->query("SELECT prenom, nom FROM 3il_utilisateurs WHERE id_user='".$reqparents[$a][1]."' OR id_user='".$reqparents[$a][2]."'"); 
+$sqlnoms = $con->query("SELECT prenom, nom FROM 3il_utilisateurs WHERE id_user='".$reqparents[$a][1]."'"); 
 $reqnoms = $sqlnoms->fetch_all();
+$sqlnoms2 = $con->query("SELECT prenom, nom FROM 3il_utilisateurs WHERE id_user='".$reqparents[$a][2]."'"); 
+$reqnoms2 = $sqlnoms2->fetch_all();
     echo '<option value="';
   echo $reqparents[$a][0];
   echo '" id=">';
-    echo $reqparents[$a][0];
+  echo $reqparents[$a][0];
   echo '">';
-  echo $reqnoms[$a][0];
+  echo $reqnoms[0][0];
   echo ' ';
-  echo $reqnoms[$a][1];
+  echo $reqnoms[0][1];
   echo ' et ';
-  echo $reqnoms[$a+1][0];
+  echo $reqnoms2[0][0];
   echo ' ';
-  echo $reqnoms[$a+1][1];
+  echo $reqnoms2[0][1];
   echo '</option>';
 }
 ?>
@@ -237,23 +241,32 @@ $reqnoms = $sqlnoms->fetch_all();
                 </tr>
             </thead>
             <tbody>
-            	<?php 
-
-            	$sqlsoldes = $con->query("SELECT parent1, parent2, montant FROM 3il_solde, 3il_union_parents WHERE id_union = union_parents ORDER BY montant ASC"); 
-				$reqsoldes = $sqlsoldes->fetch_all();
-				$ligne = $sqlsoldes->num_rows;
-				for($l=0; $l < $ligne; $l++)
-				{
-					$sqlnoms = $con->query("SELECT prenom, nom FROM 3il_utilisateurs WHERE id_user='".$reqsoldes[$l][0]."' OR id_user='".$reqsoldes[$l][1]."'"); 
-					$reqnoms = $sqlnoms->fetch_all();
-            		echo '<td data-title="Parents">';
-					echo $reqnoms[$l][0];  echo ' ';  echo $reqnoms[$l][1];  echo ' et ';  echo $reqnoms[$l+1][0];  echo ' ';  echo $reqnoms[$l+1][1];
-					echo '</td>';
-					echo '<td data-title="Solde">';
-					echo $reqsoldes[$l][2]." €";
-					echo '</td>';
-				}
-            	?>
+              <?php 
+              $sqlsoldes = $con->query("SELECT parent1, parent2, montant FROM 3il_solde, 3il_union_parents WHERE id_union = union_parents ORDER BY montant ASC"); 
+        $reqsoldes = $sqlsoldes->fetch_all();
+        $ligne = $sqlsoldes->num_rows;
+        for($l=0; $l < $ligne; $l++)
+        {
+          $sqlnoms = $con->query("SELECT prenom, nom FROM 3il_utilisateurs WHERE id_user='".$reqsoldes[$l][0]."'"); 
+          $reqnoms = $sqlnoms->fetch_all();
+          $sqlnoms2 = $con->query("SELECT prenom, nom FROM 3il_utilisateurs WHERE id_user='".$reqsoldes[$l][1]."'"); 
+          $reqnoms2 = $sqlnoms2->fetch_all();
+          echo '<tr>';
+          echo '<td data-title="Parents">';
+          echo $reqnoms[0][0]; 
+          echo ' ';  
+          echo $reqnoms[0][1];  
+          echo ' et '; 
+          echo $reqnoms2[0][0];  
+          echo ' ';  
+          echo $reqnoms2[0][1];
+          echo '</td>';
+          echo '<td data-title="Solde">';
+          echo $reqsoldes[$l][2]." €";
+          echo '</td>';
+          echo '</tr>';
+        }
+              ?>
             </tbody>
         </table>
   </div>
