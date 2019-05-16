@@ -7,6 +7,7 @@ function supprimerenfant(id){
     if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
       document.getElementById(id).remove();
       alert("La suppression a été effectuée.");
+      location.href = '../enfants.php';
     } else {
 
     }
