@@ -43,7 +43,7 @@ if (!isset ($vendredi)){
 	//On regarde si id de l'union existe sinon on l'insere
 	$sqlidunion = $con->query("SELECT id_union FROM 3il_union_parents WHERE parent1='".$req0[0]."' AND parent2='".$id_parent2."' OR parent1='".$id_parent2."' AND parent2='".$req0[0]."'");
 	$reqidunion = $sqlidunion->fetch_row();
-	echo $reqidunion[0];
+	// echo $reqidunion[0];
 	if(empty($reqidunion[0])){
 		$sqlinsertunion = $con->query("INSERT INTO 3il_union_parents (parent1, parent2) VALUES ('$req0[0]', '$id_parent2')");
 		$recupidunion = $con->query("SELECT id_union FROM 3il_union_parents WHERE parent1='$req0[0]' AND parent2='$id_parent2'");
@@ -76,4 +76,4 @@ mysqli_close($con);
     		<div class="d-flex justify-content-center"> Enfant ajouté !<br /><br />
     			Vous allez être redirigé vers la page de gestion vos enfants.<br /><br />
 		</div>
-	<?php //header("refresh:1;url=enfants.php"); ?>
+	<?php header("refresh:1;url=enfants.php"); ?>
