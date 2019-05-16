@@ -7,6 +7,7 @@ $user = $_SESSION['user'];
 <head>
     <?php include("architecture/head.html"); ?>
     <link href='CSS/enfants.css' rel='stylesheet' />
+    <script type="text/javascript" src="JS/supprimerenfant.js" charset="utf-8"></script>
 </head>
 <body id="body">
     <?php include("architecture/header.php"); ?>
@@ -90,11 +91,13 @@ for($a = 0; $a < $ligne; $a++){
 	echo $reqclasse[0];
 	echo '</td>';
 	echo ' <td data-title="Gestion">';
-	echo '<input type="submit" class="btn btn-dark" id="Modifier" value="Modifier"></input>';
-	echo '<button class="btn btn-dark" id="Supprimer" onclick="supprimerenfant('.$req1[$a][0].');">Supprimer</button>';
+	echo '<input type="submit" class="btn btn-dark" id="Modifier" value="Modifier">';
+  echo '</form>';
+	echo '<button class="btn btn-dark" id="Supprimer" onclick="supprimerenfant(';
+  echo $req1[$a][0];
+  echo ');">Supprimer</button>';
 	echo '</td>';
 	echo '</tr>';
-  echo '</form>';
 }   
 ?>       
 
@@ -192,11 +195,11 @@ for ($a=0; $a<$ligne2; $a++){
             </div>
           </div>
             <div id="boutons">
-        <input type="submit" class="btn btn-dark" id="Modifier" value="Modifier">
+        <input type="submit" class="btn btn-dark" id="Ajouter" value="Ajouter">
     </div>
     	</form>
     </div>
-    <script type="text/javascript" src="JS/supprimerenfant.js" charset="utf-8"></script>
+    
 </body>
 </html>
 

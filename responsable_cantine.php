@@ -229,33 +229,7 @@ $reqnoms = $sqlnoms->fetch_all();
   </div>
 
   <div class="container" id="soldes_container" style="display:none">
-    <table class="table table-bordered table-condensed table-body-center">
-            <thead>
-                <tr>
-                  <th style="width: 80%;">Parents</th>
-                  <th style="width: 20%;">Solde</th>
-                </tr>
-            </thead>
-            <tbody>
-            	<?php 
-
-            	$sqlsoldes = $con->query("SELECT parent1, parent2, montant FROM 3il_solde, 3il_union_parents WHERE id_union = union_parents ORDER BY montant ASC"); 
-				$reqsoldes = $sqlsoldes->fetch_all();
-				$ligne = $sqlsoldes->num_rows;
-				for($l=0; $l < $ligne; $l++)
-				{
-					$sqlnoms = $con->query("SELECT prenom, nom FROM 3il_utilisateurs WHERE id_user='".$reqsoldes[$l][0]."' OR id_user='".$reqsoldes[$l][1]."'"); 
-					$reqnoms = $sqlnoms->fetch_all();
-            		echo '<td data-title="Parents">';
-					echo $reqnoms[$l][0];  echo ' ';  echo $reqnoms[$l][1];  echo ' et ';  echo $reqnoms[$l+1][0];  echo ' ';  echo $reqnoms[$l+1][1];
-					echo '</td>';
-					echo '<td data-title="Solde">';
-					echo $reqsoldes[$l][2]." €";
-					echo '</td>';
-				}
-            	?>
-            </tbody>
-        </table>
+    toto
   </div>
   
 </body>

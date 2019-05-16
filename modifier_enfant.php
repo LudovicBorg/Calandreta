@@ -70,7 +70,7 @@ $req1 = $sql1->fetch_all();
             <select class="form-control" name="parent2" id="inputparent2">
                       <option value="<?php echo $id_parent2[0];?>" selected><?php echo $reqparent2[0]; echo ' '; echo $reqparent2[1];?></option>
 <?php
-$sqlnomsparents = $con->query("SELECT id_user, nom, prenom FROM 3il-utilisateurs");
+$sqlnomsparents = $con->query("SELECT id_user, nom, prenom FROM 3il_utilisateurs");
 $reqnomsparents = $sqlnomsparents->fetch_all();
 $ligne2 = $sqlnomsparents->num_rows;
 for ($a=0; $a<$ligne2; $a++){
