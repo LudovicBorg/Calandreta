@@ -132,6 +132,8 @@ input:checked + .slider:after {
 /*=====Partie Bouton Administration Cantine=====*/
 #Administration_cantine{
   width: 100%;
+  background-color: #86C4B5; 
+  border-color: #86C4B5;
 }
 /*=====Partie Bouton number=====*/
 #french-hens {
@@ -204,5 +206,4 @@ input:checked + .slider:after {
 }
 #nav{
     background-color: #343a40;
-
 }
