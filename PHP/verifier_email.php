@@ -4,7 +4,7 @@ include("../architecture/connexion.php");
 	$email = $_POST["email"];
 	
 		//On sélectionne l'enregistrement correspondant aux identifiants
-	$sql= "SELECT * FROM 3il_utilisateurs WHERE sessions.email='$email'";
+	$sql= "SELECT * FROM 3il_utilisateurs WHERE email='$email'";
 		//On envoie la requête
 	$req = mysqli_query($con, $sql) or die('Erreur SQL !<br>'.$sql.'<br>'.mysqli_error($con));
 
