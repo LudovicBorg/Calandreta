@@ -1,7 +1,7 @@
 <?php
 include("architecture/connexion.php");
 $user = $_SESSION['user'];
-$sqlrole = $con->query("SELECT role FROM utilisateurs WHERE email='".$user."'");
+$sqlrole = $con->query("SELECT role FROM 3il_utilisateurs WHERE email='".$user."'");
 $reqrole = $sqlrole->fetch_row(); 
 $role = $reqrole[0];
 if ($role != 2 AND $role != 4){
@@ -88,21 +88,21 @@ $week = date('W');
 $week = $week + 1;
 $annee = date('Y');
 // ON recupere les lundi et vendredi de la semaine 
-$sqlweek = $con->query("SELECT id_semaine, lundi, vendredi FROM semaines WHERE numero='".$week."' AND annee='".$annee."'");
+$sqlweek = $con->query("SELECT id_semaine, lundi, vendredi FROM 3il_semaines WHERE numero='".$week."' AND annee='".$annee."'");
 $reqweek = $sqlweek->fetch_row();
 $objdate1 = date_create($reqweek[1]);
 $date_lundi = $objdate1->format('d/m/Y');
 $objdate2 = date_create($reqweek[2]);
 $date_vendredi = $objdate2->format('d/m/Y');
 // On recupere tous les enregistrements de la cantine pour une semaine
-$toutelacantine = $con->query("SELECT lundi, mardi, jeudi, vendredi, enfant FROM cantine WHERE semaine='".$reqweek[0]."'");
+$toutelacantine = $con->query("SELECT lundi, mardi, jeudi, vendredi, enfant FROM 3il_cantine WHERE semaine='".$reqweek[0]."'");
 $reqtoutelacantine = $toutelacantine->fetch_all();
 $ligne = $toutelacantine->num_rows;
 
 
 for ($a=0; $a<$ligne; $a++){
 // On recupere les noms des enfants
-$sqlnomsenfants = $con->query("SELECT nom, prenom FROM enfants WHERE id_enfant='".$reqtoutelacantine[$a][4]."'");
+$sqlnomsenfants = $con->query("SELECT nom, prenom FROM 3il_enfants WHERE id_enfant='".$reqtoutelacantine[$a][4]."'");
 $reqnomsenfants = $sqlnomsenfants->fetch_row();
 }
 ?>
@@ -125,14 +125,14 @@ for ($a=0; $a<$ligne; $a++){
   echo '<tr>';
   echo '<td data-title="Enfant">';
 // On recupere les noms des enfants
-$sqlnomsenfants = $con->query("SELECT nom, prenom FROM enfants WHERE id_enfant='".$reqtoutelacantine[$a][4]."'");
+$sqlnomsenfants = $con->query("SELECT nom, prenom FROM 3il_enfants WHERE id_enfant='".$reqtoutelacantine[$a][4]."'");
 $reqnomsenfants = $sqlnomsenfants->fetch_row();
   echo $reqnomsenfants[0];
   echo ' ';
   echo $reqnomsenfants[1];
   echo '</td>';
   echo '<td data-title="Lundi">';
-$sqlreponsecantine = $con->query("SELECT lundi, mardi, jeudi, vendredi FROM cantine WHERE enfant='".$reqtoutelacantine[$a][4]."' AND semaine='".$reqweek[0]."'");
+$sqlreponsecantine = $con->query("SELECT lundi, mardi, jeudi, vendredi FROM 3il_cantine WHERE enfant='".$reqtoutelacantine[$a][4]."' AND semaine='".$reqweek[0]."'");
 $reqreponsecantine = $sqlreponsecantine->fetch_row();
   echo $reqreponsecantine[0];
   echo '</td>';
@@ -156,7 +156,7 @@ $reqreponsecantine = $sqlreponsecantine->fetch_row();
   <div class="container" id="prix_container" style="display:none">
 <?php
 // Récupération du prix du repas
-$sqlprix = $con->query("SELECT montant FROM montant_cantine");
+$sqlprix = $con->query("SELECT montant FROM 3il_montant_cantine");
 $prix = $sqlprix->fetch_row();
 $prix = $prix[0];
 ?>
@@ -196,13 +196,13 @@ $prix = $prix[0];
                   <select class="form-control" name="parents" >
 <?php
 //On récupère les id utilisateurs
-$sqlparents = $con->query("SELECT id_union, parent1, parent2 FROM union_parents");
+$sqlparents = $con->query("SELECT id_union, parent1, parent2 FROM 3il_union_parents");
 $reqparents = $sqlparents->fetch_all();
 $ligne = $sqlparents->num_rows;
 // echo $ligne;
 //On récupère ensuite les noms et on les affiches dans une liste
 for($a = 0; $a < $ligne; $a++){
-$sqlnoms = $con->query("SELECT prenom, nom FROM utilisateurs WHERE id_user='".$reqparents[$a][1]."' OR id_user='".$reqparents[$a][2]."'"); 
+$sqlnoms = $con->query("SELECT prenom, nom FROM 3il_utilisateurs WHERE id_user='".$reqparents[$a][1]."' OR id_user='".$reqparents[$a][2]."'"); 
 $reqnoms = $sqlnoms->fetch_all();
     echo '<option value="';
   echo $reqparents[$a][0];

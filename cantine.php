@@ -13,7 +13,7 @@ $user = $_SESSION['user'];
 <body id="body">
     <?php include("architecture/header.php"); ?>
     <?php 
-$sqlrole = $con->query("SELECT role FROM utilisateurs WHERE email='".$user."'");
+$sqlrole = $con->query("SELECT role FROM 3il_utilisateurs WHERE email='".$user."'");
 $reqrole = $sqlrole->fetch_row(); 
 $role = $reqrole[0];
 if ($role == 2 OR $role == 4){
@@ -26,14 +26,14 @@ if ($role == 2 OR $role == 4){
           <h1>Solde :</h1>
 <?php
 //On récupère id utilisateur connecté
-$sql0 = $con->query("SELECT id_user FROM utilisateurs WHERE email='".$user."'");
+$sql0 = $con->query("SELECT id_user FROM 3il_utilisateurs WHERE email='".$user."'");
 $req0 = $sql0->fetch_row();
 // echo $req0[0];
 // On récupère l'id union des parents
-$sqlunionid = $con->query("SELECT id_union FROM union_parents WHERE parent1='".$req0[0]."' OR parent2='".$req0[0]."'");
+$sqlunionid = $con->query("SELECT id_union FROM 3il_union_parents WHERE parent1='".$req0[0]."' OR parent2='".$req0[0]."'");
 $id_union = $sqlunionid->fetch_row();
 //On récupère le montant du solde
-$sqlsolde = $con->query("SELECT id_solde, montant FROM solde WHERE union_parents='".$id_union[0]."'");
+$sqlsolde = $con->query("SELECT id_solde, montant FROM 3il_solde WHERE union_parents='".$id_union[0]."'");
 $reqsolde = $sqlsolde->fetch_all();
 if ($reqsolde[0][1]>0){
   echo '<div id="greensolde">';
@@ -55,7 +55,7 @@ if ($reqsolde[0][1]>0){
             <select class="form-control" name="nom_enfant" id="id_enfant" onchange="update_week();">
 <?php
 //On récupère nom et prénom des enfants
-$sql1 = $con->query("SELECT id_enfant, prenom, nom FROM enfants WHERE parent1='".$req0[0]."' OR parent2='".$req0[0]."'");
+$sql1 = $con->query("SELECT id_enfant, prenom, nom FROM 3il_enfants WHERE parent1='".$req0[0]."' OR parent2='".$req0[0]."'");
 $req1 = $sql1->fetch_all();
 $ligne = $sql1->num_rows;
 ?>
@@ -168,10 +168,10 @@ for ($a = 0; $a < $ligne; $a++){
 // $id_enfant = $sqlid_enfant->fetch_row();
 // $id_enfant = $id_enfant[0];
   echo '<td data-title="Lundi">';
-$sqlsemaine = $con->query("SELECT id_semaine FROM semaines WHERE numero='".$week."'");
+$sqlsemaine = $con->query("SELECT id_semaine FROM 3il_semaines WHERE numero='".$week."'");
 $id_semaine = $sqlsemaine->fetch_row();
 $id_semaine = $id_semaine[0];
-$sqllecturecantine = $con->query("SELECT lundi, mardi, jeudi, vendredi FROM cantine WHERE enfant='".$req1[$a][0]."' AND semaine='".$id_semaine."'");
+$sqllecturecantine = $con->query("SELECT lundi, mardi, jeudi, vendredi FROM 3il_cantine WHERE enfant='".$req1[$a][0]."' AND semaine='".$id_semaine."'");
 $reqlecturecantine = $sqllecturecantine->fetch_all();
 echo $reqlecturecantine[0][0];
   echo '</td>';
@@ -194,11 +194,11 @@ echo $reqlecturecantine[0][3];
         <h1>Historique :</h1>
 <?php
 //On récupère l'union de deux parents
-$sqlunion = $con->query("SELECT id_union FROM union_parents WHERE parent1='".$req0[0]."' OR parent2='".$req0[0]."'");
+$sqlunion = $con->query("SELECT id_union FROM 3il_union_parents WHERE parent1='".$req0[0]."' OR parent2='".$req0[0]."'");
 $requnion = $sqlunion->fetch_row();
 
 //On récupère le montant du solde
-$sqlcheque = $con->query("SELECT montant_cheque, date_cheque FROM cheques WHERE union_parents ='".$requnion[0]."' ORDER BY date_cheque DESC");
+$sqlcheque = $con->query("SELECT montant_cheque, date_cheque FROM 3il_cheques WHERE union_parents ='".$requnion[0]."' ORDER BY date_cheque DESC");
 $reqcheque = $sqlcheque->fetch_all();
 $ligne = $sqlcheque->num_rows;
 ?>

@@ -1,7 +1,7 @@
 <?php
 include("architecture/connexion.php");
 $user = $_SESSION['user'];
-$sqlrole = $con->query("SELECT role FROM utilisateurs WHERE email='".$user."'");
+$sqlrole = $con->query("SELECT role FROM 3il_utilisateurs WHERE email='".$user."'");
 $reqrole = $sqlrole->fetch_row(); 
 $role = $reqrole[0];
 if ($role != 4){
@@ -16,7 +16,7 @@ if ($role != 4){
 	// echo $id_user;
 	// echo $id_role;
 
- $sqlmiseajourprofil = $con->query("UPDATE utilisateurs SET role = '".$id_role."' WHERE id_user='".$id_user."'");
+ $sqlmiseajourprofil = $con->query("UPDATE 3il_utilisateurs SET role = '".$id_role."' WHERE id_user='".$id_user."'");
 }
 
 ?>

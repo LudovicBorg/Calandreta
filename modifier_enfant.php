@@ -15,19 +15,19 @@ $user = $_SESSION['user'];
   $id_enfant = $_POST['id_enfant'];
 
 //On récupère nom et prénom des enfants
-$sql1 = $con->query("SELECT prenom, nom, datenaissance, classe FROM enfants WHERE id_enfant='$id_enfant'");
+$sql1 = $con->query("SELECT prenom, nom, datenaissance, classe FROM 3il_enfants WHERE id_enfant='$id_enfant'");
 $req1 = $sql1->fetch_all();
 
 //On récupère la semaine type de l'enfant
-  $sqlsemainetype = $con->query("SELECT id_cantine_type, lundi, mardi, jeudi, vendredi FROM cantine_type WHERE enfant='$id_enfant'");
+  $sqlsemainetype = $con->query("SELECT id_cantine_type, lundi, mardi, jeudi, vendredi FROM 3il_cantine_type WHERE enfant='$id_enfant'");
   $reqsemainetype = $sqlsemainetype->fetch_all();
 
 //On récupère l'id du parent 2
-  $sqlparent2 = $con->query("SELECT parent2 FROM enfants WHERE id_enfant='$id_enfant'");
+  $sqlparent2 = $con->query("SELECT parent2 FROM 3il_enfants WHERE id_enfant='$id_enfant'");
   $id_parent2 = $sqlparent2->fetch_row();
 
 //On récupère nom et prénom
-  $sqlparent2nom = $con->query("SELECT nom, prenom FROM utilisateurs WHERE id_user='$id_parent2[0]'");
+  $sqlparent2nom = $con->query("SELECT nom, prenom FROM 3il_utilisateurs WHERE id_user='$id_parent2[0]'");
   $reqparent2 = $sqlparent2nom->fetch_row();
 
 ?>
@@ -70,7 +70,7 @@ $req1 = $sql1->fetch_all();
             <select class="form-control" name="parent2" id="inputparent2">
                       <option value="<?php echo $id_parent2[0];?>" selected><?php echo $reqparent2[0]; echo ' '; echo $reqparent2[1];?></option>
 <?php
-$sqlnomsparents = $con->query("SELECT id_user, nom, prenom FROM utilisateurs");
+$sqlnomsparents = $con->query("SELECT id_user, nom, prenom FROM 3il-utilisateurs");
 $reqnomsparents = $sqlnomsparents->fetch_all();
 $ligne2 = $sqlnomsparents->num_rows;
 for ($a=0; $a<$ligne2; $a++){

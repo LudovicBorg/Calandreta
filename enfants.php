@@ -42,11 +42,11 @@ $(document).ready(function(){
     <div class="container" id="enfants">
 <?php
 //On récupère id utilisateur connecté
-$sql0 = $con->query("SELECT id_user FROM utilisateurs WHERE email='".$user."'");
+$sql0 = $con->query("SELECT id_user FROM 3il_utilisateurs WHERE email='".$user."'");
 $req0 = $sql0->fetch_row();
 // echo $req0[0];
 //On récupère nom et prénom des enfants
-$sql1 = $con->query("SELECT id_enfant, prenom, nom, datenaissance, classe FROM enfants WHERE parent1='".$req0[0]."' OR parent2='".$req0[0]."'");
+$sql1 = $con->query("SELECT id_enfant, prenom, nom, datenaissance, classe FROM 3il_enfants WHERE parent1='".$req0[0]."' OR parent2='".$req0[0]."'");
 $req1 = $sql1->fetch_all();
 $ligne = $sql1->num_rows;
 
@@ -85,7 +85,7 @@ for($a = 0; $a < $ligne; $a++){
 	// $sql2 = $con->query("SELECT classe FROM classe WHERE classe_id='".$req1[$a][3]."'");
 	// $req2 = $sql2->fetch_row();
 	echo ' <td data-title="Classe">';
-	$sqlclasse = $con->query("SELECT classe FROM classe WHERE id_classe='".$req1[$a][4]."'");
+	$sqlclasse = $con->query("SELECT classe FROM 3il_classe WHERE id_classe='".$req1[$a][4]."'");
 	$reqclasse = $sqlclasse->fetch_row();
 	echo $reqclasse[0];
 	echo '</td>';

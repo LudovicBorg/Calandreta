@@ -1,7 +1,7 @@
 <?php
 include("architecture/connexion.php");
 $user = $_SESSION['user'];
-$sqlrole = $con->query("SELECT role FROM utilisateurs WHERE email='".$user."'");
+$sqlrole = $con->query("SELECT role FROM 3il_utilisateurs WHERE email='".$user."'");
 $reqrole = $sqlrole->fetch_row(); 
 $role = $reqrole[0];
 if ($role != 4){
@@ -102,7 +102,7 @@ if ($role != 4){
             <select class="form-control" name="utilisateur" >
 <?php
 //On récupère les utilisateurs
-$sql0 = $con->query("SELECT id_user, prenom, nom FROM utilisateurs");
+$sql0 = $con->query("SELECT id_user, prenom, nom FROM 3il_utilisateurs");
 $req0 = $sql0->fetch_all();
 $ligne = $sql0->num_rows;
 // echo $ligne;
@@ -123,7 +123,7 @@ for ($a = 0; $a < $ligne; $a++){
             <select class="form-control" name="profils" >
 <?php
 //On récupère les utilisateurs
-$sql1 = $con->query("SELECT id_roles, nom FROM roles");
+$sql1 = $con->query("SELECT id_roles, nom FROM 3il_roles");
 $req1 = $sql1->fetch_all();
 $ligne = $sql1->num_rows;
 // echo $ligne;
