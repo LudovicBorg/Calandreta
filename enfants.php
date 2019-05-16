@@ -90,10 +90,8 @@ for($a = 0; $a < $ligne; $a++){
 	echo $reqclasse[0];
 	echo '</td>';
 	echo ' <td data-title="Gestion">';
-	echo '<input type="submit" class="btn btn-dark" id="Modifier" value="Modifier">';
-	echo '<button class="btn btn-dark" id="Supprimer" onclick="supprimerenfant(';
-  echo $req1[$a][0];
-  echo ');">Supprimer</button>';
+	echo '<input type="submit" class="btn btn-dark" id="Modifier" value="Modifier"></input>';
+	echo '<button class="btn btn-dark" id="Supprimer" onclick="supprimerenfant('.$req1[$a][0].');">Supprimer</button>';
 	echo '</td>';
 	echo '</tr>';
   echo '</form>';
@@ -141,7 +139,7 @@ for($a = 0; $a < $ligne; $a++){
             <select class="form-control" name="parent2" id="inputparent2">
                       <option value="" selected>Sélectionner un parent</option>
 <?php
-$sqlnomsparents = $con->query("SELECT id_user, nom, prenom FROM utilisateurs");
+$sqlnomsparents = $con->query("SELECT id_user, nom, prenom FROM 3il_utilisateurs");
 $reqnomsparents = $sqlnomsparents->fetch_all();
 $ligne2 = $sqlnomsparents->num_rows;
 for ($a=0; $a<$ligne2; $a++){
