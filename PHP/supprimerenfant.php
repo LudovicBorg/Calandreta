@@ -15,7 +15,7 @@ $user = $_SESSION['user'];
 
 $id = $_POST['id'];
 
-$sql_delete = $con->query("DELETE FROM enfants WHERE id_enfant='".$id."'");
+$sql_delete = $con->query("DELETE FROM 3il_enfants WHERE id_enfant='".$id."'");
 ?>
 <br />
 <br />

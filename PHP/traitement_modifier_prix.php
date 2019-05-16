@@ -12,7 +12,7 @@ include("../architecture/connexion.php");
 //   exit();
 // } else {
 	$nouveau_prix = $_POST['prix'];
-	$sql_nouveau_prix = $con->query("UPDATE montant_cantine SET montant='".$nouveau_prix."' WHERE montant_id='1'");
+	$sql_nouveau_prix = $con->query("UPDATE 3il_montant_cantine SET montant='".$nouveau_prix."' WHERE montant_id='1'");
 // }
 
 

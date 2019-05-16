@@ -26,7 +26,7 @@ if(mysqli_connect_errno($con))
 	$code_postal = $_POST["cp"];
 
 	//Requête d'intégration dans BDD
-	$sql = ("INSERT INTO utilisateurs (nom, prenom, email, password, telephone1, telephone2, adresse, adresse2, ville, code_postal, role) VALUES ('$nom', '$prenom', '$email', '$password', '$telephone1', '$telephone2', '$adresse1', '$adresse2', '$ville', '$code_postal', '1')");
+	$sql = ("INSERT INTO 3il_utilisateurs (nom, prenom, email, password, telephone1, telephone2, adresse, adresse2, ville, code_postal, role) VALUES ('$nom', '$prenom', '$email', '$password', '$telephone1', '$telephone2', '$adresse1', '$adresse2', '$ville', '$code_postal', '1')");
 	//On envoie la requête
 	$req = mysqli_query($con, $sql) or die('Erreur SQL !<br>'.mysqli_error($con));
 

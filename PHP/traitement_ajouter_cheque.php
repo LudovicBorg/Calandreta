@@ -6,15 +6,15 @@ include("../architecture/connexion.php");
 	$montant_cheque = $_POST['montant_cheque'];
 	$parents = $_POST['parents'];
 
-	$sqlinsertcheque = $con->query("INSERT INTO cheques (montant_cheque, numero_cheque, date_cheque, union_parents) VALUES ('$montant_cheque', '$numero_cheque', '$date_cheque', '$parents')");
+	$sqlinsertcheque = $con->query("INSERT INTO 3il_cheques (montant_cheque, numero_cheque, date_cheque, union_parents) VALUES ('$montant_cheque', '$numero_cheque', '$date_cheque', '$parents')");
 
-	$montant_cantine = $con->query("SELECT id_solde, montant FROM solde WHERE union_parents='".$parents."'");
+	$montant_cantine = $con->query("SELECT id_solde, montant FROM 3il_solde WHERE union_parents='".$parents."'");
 	$reqmontant_cantine = $montant_cantine->fetch_all();
 	$old_montant = $reqmontant_cantine[0][1];
 
 	$new_montant_cantine = $old_montant + $montant_cheque;
 
-	$sql_nouveau_montant = $con->query("UPDATE solde SET montant='".$new_montant_cantine."' WHERE union_parents='$parents'");
+	$sql_nouveau_montant = $con->query("UPDATE 3il_solde SET montant='".$new_montant_cantine."' WHERE union_parents='$parents'");
 
 ?>
 <!DOCTYPE html>
