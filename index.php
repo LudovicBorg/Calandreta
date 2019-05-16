@@ -1,24 +1,12 @@
 <?php
-//on actualise la session
-session_start();
-//On vérifie qu'elle soit bien définie
-if(!empty($_SESSION['user']) || !empty($_SESSION['password']))
-{
-    header('Location: accueil.php');
-    exit();
-}
-$con=mysqli_connect("localhost", "MALET", "Malet@root81", "calandreta");
-if(mysqli_connect_errno($con))
-{
-    echo "Erreur de connexion : ".mysqli_connect_error();
-}
+include("architecture/identification.php");
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <?php include("architecture/head.html"); ?>
     <link rel="stylesheet" type="text/css" href="css/connexion_ss.css" media="screen" />
-    <script src="js/demarrer_session.js" type="text/javascript"></script>
+
 </head>
 <br />
 <body id="body">
@@ -41,7 +29,7 @@ if(mysqli_connect_errno($con))
         <div class="col-md-6 offset-md-4">
 
             <a href="inscription.php" id="b_postuler" class="btn btn-dark">Inscription</a>
-            <input class="btn btn-dark" type="submit" id="b_connexion" onclick="demarrer_session()" value="Connexion"/>
+            <input class="btn btn-dark" type="submit" id="b_connexion" value="Connexion"/>
 <!-- <input class="btn btn-dark" type="submit" id="b_connexion" value="Connexion"/> -->
             <a href="#" class="btn btn-link">Mot de Passe oublié?</a>
         </div>

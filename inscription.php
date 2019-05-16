@@ -1,5 +1,5 @@
 <?php
-include("architecture/connexion.php");
+include("architecture/identification.php");
 ?>
 <!DOCTYPE html>
 <html>
