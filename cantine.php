@@ -17,7 +17,7 @@ $sqlrole = $con->query("SELECT role FROM 3il_utilisateurs WHERE email='".$user."
 $reqrole = $sqlrole->fetch_row(); 
 $role = $reqrole[0];
 if ($role == 2 OR $role == 4){
-  echo '<a href="responsable_cantine.php" class="btn btn-dark" id="Administration_cantine">Administration Cantine</a>';
+  echo '<a href="responsable_cantine.php" class="btn btn-dark" id="Administration_cantine">Administration Repas</a>';
 }
 ?>
   <script>

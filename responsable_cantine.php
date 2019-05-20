@@ -23,6 +23,7 @@ if ($role != 2 AND $role != 4){
     <script src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
     <script src="js/incrementing.js"></script>
     <script src="js/modifier_prix.js"></script>
+    <script src="js/semaine_cantine.js" type="text/javascript"></script>
 </head>
 <body id="body">
     <?php include("architecture/header.php"); ?>
@@ -33,46 +34,78 @@ $(document).ready(function(){
     $("#prix_container").hide();
     $("#cheque_container").hide();
     $("#soldes_container").hide();
+    $("#ajouter_semaine_container").hide();
+    $("#ferie_container").hide();
     $("#repas_container").show();
   });
   $("#cheque_but").click(function(){
     $("#prix_container").hide();
     $("#soldes_container").hide();
     $("#repas_container").hide();
+    $("#ajouter_semaine_container").hide();
+    $("#ferie_container").hide();
     $("#cheque_container").show();
     });
   $("#soldes_but").click(function(){
     $("#prix_container").hide();
     $("#cheque_container").hide();
     $("#repas_container").hide();
+    $("#ajouter_semaine_container").hide();
+    $("#ferie_container").hide();
     $("#soldes_container").show();
     });
   $("#prix_but").click(function(){
     $("#cheque_container").hide();
     $("#soldes_container").hide();
     $("#repas_container").hide();
+    $("#ajouter_semaine_container").hide();
+    $("#ferie_container").hide();
     $("#prix_container").show();
+    });
+  $("#ajouter_semaine_but").click(function(){
+    $("#cheque_container").hide();
+    $("#soldes_container").hide();
+    $("#repas_container").hide();
+    $("#prix_container").hide();
+    $("#ferie_container").hide(); 
+    $("#ajouter_semaine_container").show();
+    });
+  $("#ferie_but").click(function(){
+    $("#cheque_container").hide();
+    $("#soldes_container").hide();
+    $("#repas_container").hide();
+    $("#prix_container").hide();
+    $("#ajouter_semaine_container").hide();
+    $("#ferie_container").show();   
     });
 });
 </script>
 <!--===== Fin du script =====-->
-<a href="PHP/tache_planifiee_cantine.php" class="btn btn-dark" id="Administration_cantine">Génération manuelle de la semaine de la cantine</a>
+<a href="PHP/tache_planifiee_cantine.php" class="btn btn-dark" id="Administration_cantine">Génération manuelle de la semaine</a>
 <!--===== Navigation =====-->
       <div id="choix">
         <div class="row" id="nav">
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <label id="repas_but">Repas à commander</label>
           <input type="radio" id="repas_but" class="btn btn-dark">
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <label id="cheque_but">Déposer un chèque</label>
           <input type="radio" id="cheque_but" class="btn btn-dark">
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-2">
+          <label id="ajouter_semaine_but">Ajouter une semaine</label>
+          <input type="radio" id="ajouter_semaine_but" class="btn btn-dark">
+        </div>
+        <div class="col-sm-2">
+          <label id="ferie_but">Déclarer jours fériés</label>
+          <input type="radio" id="ferie_but" class="btn btn-dark">
+        </div>
+        <div class="col-sm-2">
           <label id="soldes_but">Voir les soldes</label>
           <input type="radio" id="soldes_but" class="btn btn-dark">
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <label id="prix_but">Modifier prix</label>
           <input type="radio" id="prix_but" class="btn btn-dark">
         </div>
@@ -117,8 +150,44 @@ $reqnomsenfants = $sqlnomsenfants->fetch_row();
                   <th style="width: 20%;">Jeudi</th>
                   <th style="width: 20%;">Vendredi</th>
                 </tr>
-            </thead>
+              </thead>
             <tbody>
+              <tr>
+              <th>Total</th>
+              <td>
+<?php
+//Requete pour compter le nombre de oui dans la colonne lundi
+$sommecantine_lundi = $con->query("SELECT COUNT(lundi) FROM 3il_cantine WHERE semaine='".$reqweek[0]."' AND lundi='OUI'");
+$reqsommecantine_lundi = $sommecantine_lundi->fetch_row();
+echo $reqsommecantine_lundi[0];
+?>
+              </td>
+              <td>
+<?php
+//Requete pour compter le nomnbre de oui dans la colonne mardi
+$sommecantine_mardi = $con->query("SELECT COUNT(mardi) FROM 3il_cantine WHERE semaine='".$reqweek[0]."' AND mardi='OUI'");
+$reqsommecantine_mardi = $sommecantine_mardi->fetch_row();
+echo $reqsommecantine_mardi[0];
+?>
+              </td>
+              <td>
+<?php
+//Requete pour compter le nomnbre de oui dans la colonne jeudi
+$sommecantine_jeudi = $con->query("SELECT COUNT(jeudi) FROM 3il_cantine WHERE semaine='".$reqweek[0]."' AND jeudi='OUI'");
+$reqsommecantine_jeudi = $sommecantine_jeudi->fetch_row();
+echo $reqsommecantine_jeudi[0];
+?>
+              </td>
+              <td>
+<?php
+//Requete pour compter le nomnbre de oui dans la colonne vendredi
+$sommecantine_vendredi = $con->query("SELECT COUNT(vendredi) FROM 3il_cantine WHERE semaine='".$reqweek[0]."' AND vendredi='OUI'");
+$reqsommecantine_vendredi = $sommecantine_vendredi->fetch_row();
+echo $reqsommecantine_vendredi[0];
+?>
+              </td>    
+              </tr>
+
 <?php 
 for ($a=0; $a<$ligne; $a++){
   echo '<tr>';
@@ -270,5 +339,103 @@ $reqnoms2 = $sqlnoms2->fetch_all();
             </tbody>
         </table>
   </div>
+
+  <div class="container" id="ajouter_semaine_container" style="display:none">
+           <h1>Enfant :</h1>
+<!--===== Code qui affiche les noms des différents enfants =====-->
+          <form method="POST" action="traitementcantine.php">
+            <select class="form-control" name="nom_enfant" id="id_enfant" onchange="update_week();">
+<?php
+//On récupère nom et prénom des enfants
+$sql1 = $con->query("SELECT id_enfant, prenom, nom FROM 3il_enfants");
+$req1 = $sql1->fetch_all();
+$ligne = $sql1->num_rows;
+?>
+            <option selected="selected" disabled>Selectionner votre enfant</option>
+<?php
+// echo $ligne;
+for ($a = 0; $a < $ligne; $a++){
+  echo '<option value="';
+  echo $req1[$a][0];
+  echo '">';
+  echo $req1[$a][1];
+  echo ' ';
+  echo $req1[$a][2];
+  echo '</option>';
+}
+?>
+            </select>
+
+<?php
+// Numéro de la semaine
+$week = date('W');
+$week = $week + 1;
+echo '<input name="week" type="hidden" value="'.$week.'">';
+// echo $week;
+// Affiche la date du prochain lundi
+$date = date('Y-m-d');
+$objdate = date_create($date . ' Next Monday');
+$date_lundi = $objdate->format('d/m/Y');
+$date_lundi_formatsql = $objdate->format('Y-m-d');
+echo '<input name="lundi" type="hidden" value="'.$date_lundi_formatsql.'">';
+// echo $date_lundi;
+// Affiche la date du prochain vendredi
+$date = date('Y-m-d');
+$objdate = date_create($date . ' Next Monday');
+$date_lundi2 = $objdate->format('Y-m-d');
+$objdate = date_create($date_lundi2 . ' Next Friday');
+$date_vendredi = $objdate->format('d/m/Y');
+$date_vendredi_formatsql = $objdate->format('Y-m-d');
+echo '<input name="vendredi" type="hidden" value="'.$date_vendredi_formatsql.'">';
+// echo $date_vendredi;
+//Récupération de l'année
+$annee = date('Y');
+echo '<input name="annee" type="hidden" value="'.$annee.'">';
+?>
+      <div class="w3-content w3-display-container">
+          <h1>
+            Semaine du <?php echo $date_lundi; ?> au <?php echo $date_vendredi; ?> :
+          </h1>
+          <table class="table table-bordered table-condensed table-body-center">
+            <thead>
+                <tr>
+                  <th style="width: 25%;">Lundi</th>
+                  <th style="width: 25%;">Mardi</th>
+                  <th style="width: 25%;">Jeudi</th>
+                  <th style="width: 25%;">Vendredi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="tr_1">
+                    <td data-title="Lundi">                     
+                        <label class="switch"><input type="checkbox" id="lundi"  name="Lundi" value="OUI">
+                        <div class="slider round"></div>
+                        </label>              
+                  </td>
+                  <td data-title="Mardi">                     
+                        <label class="switch"><input type="checkbox" id="mardi"  name="Mardi" value="OUI">
+                        <div class="slider round"></div>
+                        </label>             
+                  </td>
+                  <td data-title="Jeudi">                     
+                       <label class="switch"><input type="checkbox" id="jeudi" name="Jeudi" value="OUI">
+                       <div class="slider round" ></div>
+                       </label>                               
+                  </td>
+                  <td data-title="Vendredi">                    
+                       <label class="switch"><input type="checkbox" id="vendredi" name="Vendredi" value="OUI">
+                       <div class="slider round"></div>  
+                       </label>                               
+                  </td> 
+                  </tr>
+            </tbody>
+          </table>
+          </div>
+            <input type="submit" class="btn btn-primary" value="Valider" id="Valider">
+    </form>
+  </div>
   
+   <div class="container" id="ferie_container" style="display:none">
+    TOTO 3600
+  </div>
 </body>

@@ -59,11 +59,54 @@ if(empty($enregistrementexite)){
 $sqlinsertcantine = ("INSERT INTO 3il_cantine (lundi, mardi, jeudi, vendredi, enfant, semaine) VALUES ('$lundi', '$mardi', '$jeudi', '$vendredi', '$id_enfant', '$id_semaine')");
 $reqinsertcantine = mysqli_query($con, $sqlinsertcantine) or die('Erreur SQL !<br>'.mysqli_error($con));
 } else {
-        echo "<script language=\"javascript\">";
-        echo "alert('Cantine déjà prévue pour cet enfant sur cette semaine !')";
-        echo "</script>";
-        header('Refresh: 0.5; cantine.php');
-        exit;
+    //On la semaine deja prevue
+    $sqlsemaine_deja_prevue = $con->query("SELECT lundi, mardi, jeudi, vendredi FROM 3il_cantine WHERE enfant='".$id_enfant."' AND semaine='".$id_semaine."'");
+    $reqsemaine_deja_prevue = $sqlsemaine_deja_prevue->fetch_row();
+    // Récupération des parents de l'enfant
+    $sqlrecupparent = $con->query("SELECT parent1, parent2 FROM 3il_enfants WHERE id_enfant='".$id_enfant."'");
+    $reqrecupparent = $sqlrecupparent->fetch_all();
+    $parent1 = $reqrecupparent[0][0];
+    $parent2 = $reqrecupparent[0][1];
+    // echo $parent1;
+    // echo $parent2;
+    // Récupération du prix du repas
+    $sqlprix = $con->query("SELECT montant FROM 3il_montant_cantine");
+    $prix = $sqlprix->fetch_row();
+    $prix = $prix[0];
+    // On récupère l'id union des parents
+    $sqlunionid = $con->query("SELECT id_union FROM 3il_union_parents WHERE parent1='".$parent1."' AND parent2='".$parent2."' OR parent1='".$parent2."' AND parent2='".$parent1."'");
+    $id_union = $sqlunionid->fetch_row();
+    //On récupère le montant du solde
+    $sqlsolde = $con->query("SELECT id_solde, montant FROM 3il_solde WHERE union_parents='".$id_union[0]."'");
+    $reqsolde = $sqlsolde->fetch_all();
+    $id_solde = $reqsolde[0][0];
+    $montant = $reqsolde[0][1];
+    //si un jour a ete prevu on crédite le compte
+    $semaine_prevue_lundi = $reqsemaine_deja_prevue[0];
+    $semaine_prevue_mardi = $reqsemaine_deja_prevue[1];
+    $semaine_prevue_jeudi = $reqsemaine_deja_prevue[2];
+    $semaine_prevue_vendredi = $reqsemaine_deja_prevue[3];
+    if($semaine_prevue_lundi == 'OUI'){
+    $montant = $montant + $prix;
+    $sqlsoldeajour = $con->query("UPDATE 3il_solde SET montant = '".$montant."' WHERE id_solde='".$id_solde."'");
+    } if($semaine_prevue_mardi  == 'OUI'){
+    $montant = $montant + $prix;
+    $sqlsoldeajour = $con->query("UPDATE 3il_solde SET montant = '".$montant."' WHERE id_solde='".$id_solde."'");
+    } if($semaine_prevue_jeudi  == 'OUI'){
+    $montant = $montant + $prix;
+    $sqlsoldeajour = $con->query("UPDATE 3il_solde SET montant = '".$montant."' WHERE id_solde='".$id_solde."'");
+    } if($semaine_prevue_vendredi  == 'OUI'){
+    $montant = $montant + $prix;
+    $sqlsoldeajour = $con->query("UPDATE 3il_solde SET montant = '".$montant."' WHERE id_solde='".$id_solde."'");
+    }
+
+    $sqlupdatecantine = ("UPDATE 3il_cantine SET lundi='$lundi', mardi='$mardi', jeudi='$jeudi', vendredi='$vendredi' WHERE enfant='$id_enfant' AND semaine='$id_semaine'");
+    $requpdatecantine = mysqli_query($con, $sqlupdatecantine) or die('Erreur SQL !<br>'.mysqli_error($con));
+        // echo "<script language=\"javascript\">";
+        // echo "alert('Cantine déjà prévue pour cet enfant sur cette semaine !')";
+        // echo "</script>";
+        // header('Refresh: 0.5; cantine.php');
+        // exit;
 }
 
 /*=====Partie Solde=====*/
@@ -112,7 +155,7 @@ if($lundi == 'OUI'){
 <body id="body">
     <br />
     <?php include("architecture/header.php"); ?>
-        <div class="d-flex justify-content-center"> Enregistrement effectué.<br><br>Vous allez être redirigé vers la page cantine.
+        <div class="d-flex justify-content-center"> Enregistrement effectué.<br><br>Vous allez être redirigé vers la page repas.
         </div>
     <?php header("refresh:1;url=cantine.php"); ?>
 </body>
