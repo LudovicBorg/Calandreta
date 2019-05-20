@@ -207,3 +207,7 @@ input:checked + .slider:after {
 #nav{
     background-color: #343a40;
 }
+
+#b_valider_periodes{
+  text-align: center;
+}
