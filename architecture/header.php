@@ -9,7 +9,7 @@
 			<li class="nav-item"><a href="accueil.php" id="b_nav" class="btn btn-light">Accueil</a></li>
 			<li class="nav-item"><a href="enfants.php" id="b_nav" class="btn btn-light">Enfants</a></li>
 			<li class="nav-item"><a href="planning.php" id="b_nav" class="btn btn-light">Planning</a></li>
-			<li class="nav-item"><a href="cantine.php" id="b_nav" class="btn btn-light">Cantine</a></li>
+			<li class="nav-item"><a href="cantine.php" id="b_nav" class="btn btn-light">Repas</a></li>
 			<li class="nav-item"><a href="admin.php" id="b_nav" class="btn btn-light">Admin</a></li>
 			<?php
 			//Permet d'afficher ou masquer le bouton déconnexion s'il y a un utilisateur connecté.
