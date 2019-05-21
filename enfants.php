@@ -93,7 +93,7 @@ for($a = 0; $a < $ligne; $a++){
 	echo ' <td data-title="Gestion">';
 	echo '<input type="submit" class="btn btn-dark" id="Modifier" value="Modifier">';
   echo '</form>';
-	echo '<button class="btn btn-dark" id="Supprimer" onclick="supprimerenfant(';
+	echo '<button class="btn btn-danger" id="Supprimer" onclick="supprimerenfant(';
   echo $req1[$a][0];
   echo ');">Supprimer</button>';
 	echo '</td>';

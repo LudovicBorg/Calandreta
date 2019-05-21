@@ -7,7 +7,6 @@
 <body>
 	<?php
 	include("../architecture/connexion.php");
-
 // Numéro de la semaine
 	$week = date('W');
 	$week = $week + 1;

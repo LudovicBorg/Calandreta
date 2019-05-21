@@ -16,17 +16,15 @@ include("architecture/connexion.php");
 
     <form id="f_bienvenue">
         <div>
-            Bienvenue sur le site de la CALANDRETA.<br><br>
-            <pre>
-              _____________
-            < Oh la vache !>
-              -------------
-                     \   ^__^ 
-                      \  (oo)\_______
-                         (__)\       )\/\
-                             ||----w |
-                             ||     ||
-  </pre>
+            <h1>
+              Bienvenue sur la Calandreta !
+            </h1>
+<br />
+<img src="images/calandreta_2.jpg">
+<br />
+<p>
+  Vous trouverez un guide d'utilisation de ce site <a href="doc/guide_utilisation.pdf">ici.</a>
+</p>
         </div>
     </form>
 

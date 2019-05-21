@@ -86,6 +86,8 @@ $reqinsertcantine = mysqli_query($con, $sqlinsertcantine) or die('Erreur SQL !<b
     $semaine_prevue_mardi = $reqsemaine_deja_prevue[1];
     $semaine_prevue_jeudi = $reqsemaine_deja_prevue[2];
     $semaine_prevue_vendredi = $reqsemaine_deja_prevue[3];
+}
+
     if($semaine_prevue_lundi == 'OUI'){
     $montant = $montant + $prix;
     $sqlsoldeajour = $con->query("UPDATE 3il_solde SET montant = '".$montant."' WHERE id_solde='".$id_solde."'");
@@ -107,7 +109,7 @@ $reqinsertcantine = mysqli_query($con, $sqlinsertcantine) or die('Erreur SQL !<b
         // echo "</script>";
         // header('Refresh: 0.5; cantine.php');
         // exit;
-}
+
 
 /*=====Partie Solde=====*/
 // Récupération des parents de l'enfant
@@ -143,6 +145,66 @@ if($lundi == 'OUI'){
     $sqlsoldeajour = $con->query("UPDATE 3il_solde SET montant = '".$montant."' WHERE id_solde='".$id_solde."'");
 }
 
+//Pour la partie historique
+//Insertion de la date ou recupération de l'id
+$date2 = date('m-Y');
+$sql_mois = $con->query("SELECT id_mois_annee FROM 3il_mois_annee WHERE mois_annee = '".$date2."'");
+$req_mois = $sql_mois->fetch_row();
+if (empty($req_mois[0])){
+    $sqlinsert_mois = $con->query("INSERT INTO 3il_mois_annee (mois_annee) VALUES ('$date2')");
+    $sql_mois = $con->query("SELECT id_mois_annee FROM 3il_mois_annee WHERE mois_annee = '".$date2."'");
+    $req_mois = $sql_mois->fetch_row();
+}
+
+
+    //Si un jour a deja été prevu on soustrait le prix du repas sur le montant pour l'historique
+    $sql_solde_historique = $con->query("SELECT id_solde_historique, montant FROM 3il_soldes_historique WHERE union_parents='$id_union[0]' AND mois='$req_mois[0]'");
+    $req_solde_historique = $sql_solde_historique->fetch_all();
+    // echo $req_solde_historique[0][0];
+    // echo $req_solde_historique[0][1];
+    $montant2 = $req_solde_historique[0][1];
+    //Pour historique
+    if($lundi == "NON" AND $semaine_prevue_lundi == "OUI"){
+        $montant2 = $montant2 - $prix;
+        $sqlmontant2 = $con->query("UPDATE 3il_soldes_historique SET montant = '".$montant2."' WHERE id_solde_historique='".$req_solde_historique[0][0]."'");
+    } if ($mardi == "NON" AND $semaine_prevue_mardi == "OUI"){
+        $montant2 = $montant2 - $prix;
+        $sqlmontant2 = $con->query("UPDATE 3il_soldes_historique SET montant = '".$montant2."' WHERE id_solde_historique='".$req_solde_historique[0][0]."'");
+    } if ($jeudi == "NON"  AND $semaine_prevue_jeudi == "OUI"){
+        $montant2 = $montant2 - $prix;
+        $sqlmontant2 = $con->query("UPDATE 3il_soldes_historique SET montant = '".$montant2."' WHERE id_solde_historique='".$req_solde_historique[0][0]."'");
+    } if ($vendredi == "NON"  AND $semaine_prevue_vendredi == "OUI"){
+        $montant2 = $montant2 - $prix;
+        $sqlmontant2 = $con->query("UPDATE 3il_soldes_historique SET montant = '".$montant2."' WHERE id_solde_historique='".$req_solde_historique[0][0]."'");
+    }
+
+
+
+//Partie historique du solde
+
+//Insertion du solde ou mise a jour du solde
+$sql_mise_a_jour_solde_mois = $con->query("SELECT id_solde_historique FROM 3il_soldes_historique WHERE mois='$req_mois[0]' AND union_parents='$id_union[0]'");
+$req_mise_a_jour_solde = $sql_mise_a_jour_solde_mois->fetch_row();
+if (empty($req_mise_a_jour_solde)){
+    $sqlinsert_solde_mois = $con->query("INSERT INTO 3il_soldes_historique (mois, montant, union_parents) VALUES ('".$req_mois[0]."', '0', '".$id_union[0]."')");
+}
+    $sql_id_solde_mis_a_jour = $con->query("SELECT id_solde_historique, montant FROM 3il_soldes_historique WHERE mois='$req_mois[0]' AND union_parents='$id_union[0]'");
+    $req_id_solde_mis_a_jour = $sql_id_solde_mis_a_jour->fetch_all();
+    $montant3 = $req_id_solde_mis_a_jour[0][1];
+if($lundi == 'OUI'){
+    $montant3 = $montant3 + $prix;
+    $sqlsoldeajour = $con->query("UPDATE 3il_soldes_historique SET montant = '".$montant3."' WHERE id_solde_historique ='".$req_id_solde_mis_a_jour[0][0]."'");
+} if($mardi == 'OUI'){
+    $montant3 = $montant3 + $prix;
+    $sqlsoldeajour = $con->query("UPDATE 3il_soldes_historique SET montant = '".$montant3."' WHERE id_solde_historique ='".$req_id_solde_mis_a_jour[0][0]."'");
+} if($jeudi == 'OUI'){
+    $montant3 = $montant3 + $prix;
+    $sqlsoldeajour = $con->query("UPDATE 3il_soldes_historique SET montant = '".$montant3."' WHERE id_solde_historique ='".$req_id_solde_mis_a_jour[0][0]."'");
+} if($vendredi == 'OUI'){
+    $montant3 = $montant3 + $prix;
+    $sqlsoldeajour = $con->query("UPDATE 3il_soldes_historique SET montant = '".$montant3."' WHERE id_solde_historique ='".$req_id_solde_mis_a_jour[0][0]."'");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -153,10 +215,10 @@ if($lundi == 'OUI'){
     <script src="js/demarrer_session.js" type="text/javascript"></script>
 </head>
 <body id="body">
-    <br />
     <?php include("architecture/header.php"); ?>
+    <br />
         <div class="d-flex justify-content-center"> Enregistrement effectué.<br><br>Vous allez être redirigé vers la page repas.
         </div>
-    <?php header("refresh:1;url=cantine.php"); ?>
+    <?php  header("refresh:1;url=cantine.php"); ?>
 </body>
 </html>

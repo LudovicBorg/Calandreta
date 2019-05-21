@@ -327,3 +327,112 @@ for ($a = 0; $a < $ligne; $a++){
             </tbody>
           </table>
         </div>
+
+      <div class="container" id="soldes_container" style="display:none">
+<?php
+// $date2 = date('m-Y');
+// echo '<input name="week" type="hidden" value="'.$date2.'">';
+
+
+if ($reqsolde[0][1]>0){
+  ?>
+        <table class="table table-bordered table-condensed table-body-center">
+            <thead>
+                <tr>
+                  <th style="width: 50%;">Date</th>
+                  <th style="width: 50%;">Soldes</th>
+                </tr>
+            </thead>
+            <tbody>
+<?php
+//On récupère les montants du solde
+$sqlhistorique = $con->query("SELECT mois, montant FROM 3il_soldes_historique WHERE union_parents ='".$requnion[0]."'");
+$reqhistorique = $sqlhistorique->fetch_all();
+$ligne2 = $sqlhistorique->num_rows;
+for ($a = 0; $a < $ligne2; $a++){
+  $sqldate = $con->query("SELECT mois_annee FROM 3il_mois_annee WHERE id_mois_annee = '".$reqhistorique[$a][0]."'");
+  $reqdate = $sqldate->fetch_row();
+  echo '<tr id="'.$a.'">';
+  echo ' <td data-title="Date">';
+  echo $reqdate[0];
+  echo '</td>';
+  echo '<td data-title="Montant">';
+  echo $reqhistorique[$a][1];
+  echo '</td>';
+  echo '</tr>';
+}
+?>
+            </tbody>
+          </table>
+<?php 
+} else {
+?>
+<div class="row">
+<div class="col-sm-6">
+        <table class="table table-bordered table-condensed table-body-center">
+            <thead>
+                <tr>
+                  <th style="width: 50%;">Date</th>
+                  <th style="width: 50%;">Soldes</th>
+                </tr>
+            </thead>
+            <tbody>
+<?php
+//On récupère les montants du solde
+$sqlhistorique = $con->query("SELECT mois, montant FROM 3il_soldes_historique WHERE union_parents ='".$id_union[0][0]."'");
+$reqhistorique = $sqlhistorique->fetch_all();
+$ligne2 = $sqlhistorique->num_rows;
+for ($a = 0; $a < $ligne2; $a++){
+  $sqldate = $con->query("SELECT mois_annee FROM 3il_mois_annee WHERE id_mois_annee = '".$reqhistorique[$a][0]."'");
+  $reqdate = $sqldate->fetch_row();
+  echo '<tr id="'.$a.'">';
+  echo ' <td data-title="Date">';
+  echo $reqdate[0];
+  echo '</td>';
+  echo '<td data-title="Montant">';
+  echo $reqhistorique[$a][1];
+  echo '</td>';
+  echo '</tr>';
+}
+?>
+            </tbody>
+          </table>
+        </div>
+<div class="col-sm-6">
+        <table class="table table-bordered table-condensed table-body-center">
+            <thead>
+                <tr>
+                  <th style="width: 50%;">Date</th>
+                  <th style="width: 50%;">Soldes</th>
+                </tr>
+            </thead>
+            <tbody>
+<?php
+//On récupère les montants du solde
+$sqlhistorique = $con->query("SELECT mois, montant FROM 3il_soldes_historique WHERE union_parents ='".$id_union[1][0]."'");
+$reqhistorique = $sqlhistorique->fetch_all();
+$ligne2 = $sqlhistorique->num_rows;
+for ($a = 0; $a < $ligne2; $a++){
+  $sqldate = $con->query("SELECT mois_annee FROM 3il_mois_annee WHERE id_mois_annee = '".$reqhistorique[$a][0]."'");
+  $reqdate = $sqldate->fetch_row();
+  echo '<tr id="'.$a.'">';
+  echo ' <td data-title="Date">';
+  echo $reqdate[0];
+  echo '</td>';
+  echo '<td data-title="Montant">';
+  echo $reqhistorique[$a][1];
+  echo '</td>';
+  echo '</tr>';
+}
+?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+<?php
+}
+?>
+      </div>
+    </body>
+    </html>
+  

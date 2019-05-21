@@ -538,13 +538,11 @@ if ($role != 2 AND $role != 4){
     var xmlhttp;
   console.log(id);
   xmlhttp = new XMLHttpRequest();
-
   xmlhttp.onreadystatechange = function(){
     if(xmlhttp.readyState == 4){
       document.getElementById(id).remove();
       alert("La suppression a été effectuée.");
     } else {
-
     }
   }
   xmlhttp.open("POST", "PHP/supprimer_jour_conge.php", true);
