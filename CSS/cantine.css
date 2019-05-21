@@ -154,6 +154,9 @@ input:checked + .slider:after {
   text-align: center;
   background: url(../Images/buttons.png) no-repeat;
 }
+#imprimer{
+  width: auto;
+}
 .dec {
   background-position: 0 -29px;
 }
