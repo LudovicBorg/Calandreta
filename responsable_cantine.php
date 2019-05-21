@@ -217,6 +217,7 @@ if ($role != 2 AND $role != 4){
           ?>
         </tbody>
       </table>
+      <a href="PHP/imprimer_cantine.php" id="imprimer" class="btn btn-danger">Imprimer la liste</a>
     </div>
   </div>
 
