@@ -1,5 +1,5 @@
 <?php
-include("architecture/identification.php");
+include("../architecture/identification.php");
 
 	$nom = $_POST["nom"];
 	$prenom = $_POST["prenom"];
